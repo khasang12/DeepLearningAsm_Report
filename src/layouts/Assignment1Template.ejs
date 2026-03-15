@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<%- component('organisms/Head/Head', {
+    title: 'Assignment 1 - ' + assignment.title,
+    description: site.description,
+    author: group.name,
+    group: group
+}) -%>
+<body class="min-h-screen bg-gray-50 text-gray-900 font-sans antialiased page-loading dark:bg-gray-900 dark:text-gray-100">
+    
+    <!-- Header -->
+    <%- component('organisms/Header/Header', {
+        title: 'Assignment ' + assignment.number,
+        subtitle: assignment.subtitle,
+        gradient: assignment.gradient,
+        showHomeButton: true,
+        showAssignmentInfo: true,
+        assignmentNumber: assignment.number,
+        themeColor: assignment.themeColor,
+        group: group,
+        instructor: instructor
+    }) -%>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto space-y-8">
+            
+            <!-- Deliverables Section -->
+            <section class="card">
+                <div class="flex items-center mb-6">
+                    <i class="bi bi-box-seam-fill text-2xl text-primary-600 mr-3"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">Deliverables</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Demo Video -->
+                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                        <i class="bi bi-play-btn-fill text-3xl text-red-500 mr-4"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.demoVideo.label %></h3>
+                            <p class="text-sm text-gray-600 mb-3"><%= deliverables.demoVideo.description %></p>
+                            <a href="<%= deliverableLinks.demoVideo %>" 
+                               class="btn-outline text-sm py-1.5 px-3 border-red-300 text-red-600 hover:bg-red-50">
+                                Watch Video
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Presentation Video -->
+                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                        <i class="bi bi-youtube text-3xl text-red-500 mr-4"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.presentationVideo.label %></h3>
+                            <p class="text-sm text-gray-600 mb-3"><%= deliverables.presentationVideo.description %></p>
+                            <a href="<%= deliverableLinks.presentationVideo %>" 
+                               class="btn-outline text-sm py-1.5 px-3 border-red-300 text-red-600 hover:bg-red-50">
+                                Watch on YouTube
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Source Code -->
+                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                        <i class="bi bi-github text-3xl text-gray-700 mr-4"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.sourceCode.label %></h3>
+                            <p class="text-sm text-gray-600 mb-3"><%= deliverables.sourceCode.description %></p>
+                            <a href="<%= deliverableLinks.sourceCode %>" 
+                               class="btn-outline text-sm py-1.5 px-3 border-gray-300 text-gray-700 hover:bg-gray-50">
+                                View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Results Section with Tabs -->
+            <section class="card">
+                <div class="flex items-center mb-6">
+                    <i class="bi bi-bar-chart-fill text-2xl text-green-600 mr-3"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">Results</h2>
+                </div>
+                            
+                <!-- Dataset Tabs -->
+                <div class="mb-8">
+                    <div class="border-b border-gray-200 dark:border-gray-700">
+                        <nav class="flex space-x-1" aria-label="Dataset tabs">
+                            <button data-tab="image" class="tab-button active inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 transition-colors" aria-current="page">
+                                <i class="bi bi-image mr-2"></i>
+                                Image Dataset
+                            </button>
+                            <button data-tab="text" class="tab-button inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 transition-colors">
+                                <i class="bi bi-text-paragraph mr-2"></i>
+                                Text Dataset
+                            </button>
+                            <button data-tab="multimodal" class="tab-button inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 transition-colors">
+                                <i class="bi bi-layers mr-2"></i>
+                                Multimodal Dataset
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+                
+                <!-- Tab Content -->
+                <div id="tab-content">
+                    <!-- Image Dataset Tab -->
+                    <div id="image-tab" class="tab-pane active space-y-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4"><%= datasets.image.name %></h3>
+                            <p class="text-gray-700 dark:text-gray-300 mb-6"><%= datasets.image.description %></p>
+                            <p class="text-lg text-gray-700 dark:text-gray-300 mb-8"><%= datasets.image.results.summary %></p>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <!-- Performance Metrics -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Performance Metrics</h4>
+                                    <div class="space-y-4">
+                                        <% datasets.image.results.metrics.forEach(function(metric) { -%>
+                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                            <span class="text-gray-700 dark:text-gray-300"><%= metric.label %></span>
+                                            <span class="text-lg font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
+                                                <%= metric.value %>
+                                            </span>
+                                        </div>
+                                        <% }) -%>
+                                    </div>
+                                </div>
+                                
+                                <!-- Confusion Matrix -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrix</h4>
+                                    <div class="flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <i class="bi bi-diagram-3 text-5xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                                        <p class="text-gray-700 dark:text-gray-300 text-center mb-2"><%= datasets.image.results.confusionMatrix.description %></p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center"><%= datasets.image.results.confusionMatrix.note %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                             <!-- Observations -->
+                             <% if (datasets.image.results.observations && datasets.image.results.observations.length > 0) { -%>
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Key Observations</h4>
+                                 <ul class="space-y-2">
+                                     <% datasets.image.results.observations.forEach(function(obs) { -%>
+                                     <li class="flex items-start">
+                                         <i class="bi bi-check-circle-fill text-green-500 mr-2 mt-0.5"></i>
+                                         <span class="text-gray-700 dark:text-gray-300"><%= obs %></span>
+                                     </li>
+                                     <% }) -%>
+                                 </ul>
+                             </div>
+                             <% } -%>
+                             
+                             <!-- Technical Summary for Image Dataset -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Technical Summary</h4>
+                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                     <!-- Techniques Used -->
+                                     <div>
+                                         <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-3">Techniques Used</h5>
+                                         <ul class="space-y-2">
+                                             <% technicalSummary.techniques.forEach(function(technique) { -%>
+                                             <li class="flex items-start">
+                                                 <i class="bi bi-check-square-fill text-primary-500 mr-2 mt-0.5"></i>
+                                                 <span class="text-gray-700 dark:text-gray-300"><%= technique %></span>
+                                             </li>
+                                             <% }) -%>
+                                         </ul>
+                                     </div>
+                                     
+                                     <!-- Model Architecture -->
+                                     <div>
+                                         <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-3">Model Architecture</h5>
+                                         <div class="bg-gray-900 text-gray-100 rounded-xl p-4 font-mono text-sm overflow-x-auto">
+                                             <pre class="whitespace-pre-wrap"><%= technicalSummary.architecture %></pre>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- Training Details -->
+                                 <% if (technicalSummary.trainingDetails && technicalSummary.trainingDetails.length > 0) { -%>
+                                 <div class="mt-6 pt-6 border-t border-gray-300 dark:border-gray-700">
+                                     <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-4">Training Details</h5>
+                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                         <% technicalSummary.trainingDetails.forEach(function(detail) { -%>
+                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-1"><%= detail.label %></p>
+                                             <p class="text-xl font-bold text-gray-900 dark:text-gray-100"><%= detail.value %></p>
+                                         </div>
+                                         <% }) -%>
+                                     </div>
+                                 </div>
+                                 <% } -%>
+                             </div>
+                             
+                             <!-- Reports for Image Dataset -->
+                             <% if (datasets.image.reports && datasets.image.reports.length > 0) { -%>
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Detailed Reports</h4>
+                                 <div class="space-y-6">
+                                     <% datasets.image.reports.forEach(function(report) { -%>
+                                     <div class="card-flat group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300 hover:translate-x-1">
+                                         <div class="flex flex-col md:flex-row md:items-center justify-between">
+                                             <div class="mb-4 md:mb-0 md:mr-6">
+                                                 <div class="flex items-center mb-3">
+                                                     <span class="badge-<%= report.color %> mr-3">
+                                                         <%= report.number %>
+                                                     </span>
+                                                     <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
+                                                 </div>
+                                                 <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
+                                                 <ul class="space-y-1">
+                                                     <% report.items.forEach(function(item) { -%>
+                                                     <li class="flex items-start text-gray-600 dark:text-gray-400">
+                                                         <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
+                                                         <span><%= item %></span>
+                                                     </li>
+                                                     <% }) -%>
+                                                 </ul>
+                                             </div>
+                                             <a href="<%= report.link %>" 
+                                                class="btn-<%= report.color === 'danger' ? 'outline border-red-300 text-red-600 hover:bg-red-50' : report.color %> inline-flex items-center self-start md:self-center mt-4 md:mt-0">
+                                                 View Full Report
+                                             </a>
+                                         </div>
+                                     </div>
+                                     <% }) -%>
+                                 </div>
+                             </div>
+                             <% } -%>
+                         </div>
+                    </div>
+                    
+                    <!-- Text Dataset Tab -->
+                    <div id="text-tab" class="tab-pane hidden space-y-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4"><%= datasets.text.name %></h3>
+                            <p class="text-gray-700 dark:text-gray-300 mb-6"><%= datasets.text.description %></p>
+                            <p class="text-lg text-gray-700 dark:text-gray-300 mb-8"><%= datasets.text.results.summary %></p>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <!-- Performance Metrics -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Performance Metrics</h4>
+                                    <div class="space-y-4">
+                                        <% datasets.text.results.metrics.forEach(function(metric) { -%>
+                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                            <span class="text-gray-700 dark:text-gray-300"><%= metric.label %></span>
+                                            <span class="text-lg font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
+                                                <%= metric.value %>
+                                            </span>
+                                        </div>
+                                        <% }) -%>
+                                    </div>
+                                </div>
+                                
+                                <!-- Confusion Matrix -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrix</h4>
+                                    <div class="flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <i class="bi bi-diagram-3 text-5xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                                        <p class="text-gray-700 dark:text-gray-300 text-center mb-2"><%= datasets.text.results.confusionMatrix.description %></p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center"><%= datasets.text.results.confusionMatrix.note %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                             <!-- Observations -->
+                             <% if (datasets.text.results.observations && datasets.text.results.observations.length > 0) { -%>
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Key Observations</h4>
+                                 <ul class="space-y-2">
+                                     <% datasets.text.results.observations.forEach(function(obs) { -%>
+                                     <li class="flex items-start">
+                                         <i class="bi bi-check-circle-fill text-green-500 mr-2 mt-0.5"></i>
+                                         <span class="text-gray-700 dark:text-gray-300"><%= obs %></span>
+                                     </li>
+                                     <% }) -%>
+                                 </ul>
+                             </div>
+                             <% } -%>
+                             
+                             <!-- Technical Summary for Text Dataset -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Technical Summary</h4>
+                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                     <!-- Techniques Used -->
+                                     <div>
+                                         <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-3">Techniques Used</h5>
+                                         <ul class="space-y-2">
+                                             <% technicalSummary.techniques.forEach(function(technique) { -%>
+                                             <li class="flex items-start">
+                                                 <i class="bi bi-check-square-fill text-primary-500 mr-2 mt-0.5"></i>
+                                                 <span class="text-gray-700 dark:text-gray-300"><%= technique %></span>
+                                             </li>
+                                             <% }) -%>
+                                         </ul>
+                                     </div>
+                                     
+                                     <!-- Model Architecture -->
+                                     <div>
+                                         <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-3">Model Architecture</h5>
+                                         <div class="bg-gray-900 text-gray-100 rounded-xl p-4 font-mono text-sm overflow-x-auto">
+                                             <pre class="whitespace-pre-wrap"><%= technicalSummary.architecture %></pre>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- Training Details -->
+                                 <% if (technicalSummary.trainingDetails && technicalSummary.trainingDetails.length > 0) { -%>
+                                 <div class="mt-6 pt-6 border-t border-gray-300 dark:border-gray-700">
+                                     <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-4">Training Details</h5>
+                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                         <% technicalSummary.trainingDetails.forEach(function(detail) { -%>
+                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-1"><%= detail.label %></p>
+                                             <p class="text-xl font-bold text-gray-900 dark:text-gray-100"><%= detail.value %></p>
+                                         </div>
+                                         <% }) -%>
+                                     </div>
+                                 </div>
+                                 <% } -%>
+                             </div>
+                             
+                             <!-- Reports for Text Dataset -->
+                             <% if (datasets.text.reports && datasets.text.reports.length > 0) { -%>
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Detailed Reports</h4>
+                                 <div class="space-y-6">
+                                     <% datasets.text.reports.forEach(function(report) { -%>
+                                     <div class="card-flat group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300 hover:translate-x-1">
+                                         <div class="flex flex-col md:flex-row md:items-center justify-between">
+                                             <div class="mb-4 md:mb-0 md:mr-6">
+                                                 <div class="flex items-center mb-3">
+                                                     <span class="badge-<%= report.color %> mr-3">
+                                                         <%= report.number %>
+                                                     </span>
+                                                     <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
+                                                 </div>
+                                                 <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
+                                                 <ul class="space-y-1">
+                                                     <% report.items.forEach(function(item) { -%>
+                                                     <li class="flex items-start text-gray-600 dark:text-gray-400">
+                                                         <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
+                                                         <span><%= item %></span>
+                                                     </li>
+                                                     <% }) -%>
+                                                 </ul>
+                                             </div>
+                                             <a href="<%= report.link %>" 
+                                                class="btn-<%= report.color === 'danger' ? 'outline border-red-300 text-red-600 hover:bg-red-50' : report.color %> inline-flex items-center self-start md:self-center mt-4 md:mt-0">
+                                                 View Full Report
+                                             </a>
+                                         </div>
+                                     </div>
+                                     <% }) -%>
+                                 </div>
+                             </div>
+                             <% } -%>
+                         </div>
+                    </div>
+                    
+                    <!-- Multimodal Dataset Tab -->
+                    <div id="multimodal-tab" class="tab-pane hidden space-y-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4"><%= datasets.multimodal.name %></h3>
+                            <p class="text-gray-700 dark:text-gray-300 mb-6"><%= datasets.multimodal.description %></p>
+                            <p class="text-lg text-gray-700 dark:text-gray-300 mb-8"><%= datasets.multimodal.results.summary %></p>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <!-- Performance Metrics -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Performance Metrics</h4>
+                                    <div class="space-y-4">
+                                        <% datasets.multimodal.results.metrics.forEach(function(metric) { -%>
+                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                            <span class="text-gray-700 dark:text-gray-300"><%= metric.label %></span>
+                                            <span class="text-lg font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
+                                                <%= metric.value %>
+                                            </span>
+                                        </div>
+                                        <% }) -%>
+                                    </div>
+                                </div>
+                                
+                                <!-- Confusion Matrix -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrix</h4>
+                                    <div class="flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <i class="bi bi-diagram-3 text-5xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                                        <p class="text-gray-700 dark:text-gray-300 text-center mb-2"><%= datasets.multimodal.results.confusionMatrix.description %></p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center"><%= datasets.multimodal.results.confusionMatrix.note %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                             <!-- Observations -->
+                             <% if (datasets.multimodal.results.observations && datasets.multimodal.results.observations.length > 0) { -%>
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Key Observations</h4>
+                                 <ul class="space-y-2">
+                                     <% datasets.multimodal.results.observations.forEach(function(obs) { -%>
+                                     <li class="flex items-start">
+                                         <i class="bi bi-check-circle-fill text-green-500 mr-2 mt-0.5"></i>
+                                         <span class="text-gray-700 dark:text-gray-300"><%= obs %></span>
+                                     </li>
+                                     <% }) -%>
+                                 </ul>
+                             </div>
+                             <% } -%>
+                             
+                             <!-- Technical Summary for Multimodal Dataset -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Technical Summary</h4>
+                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                     <!-- Techniques Used -->
+                                     <div>
+                                         <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-3">Techniques Used</h5>
+                                         <ul class="space-y-2">
+                                             <% technicalSummary.techniques.forEach(function(technique) { -%>
+                                             <li class="flex items-start">
+                                                 <i class="bi bi-check-square-fill text-primary-500 mr-2 mt-0.5"></i>
+                                                 <span class="text-gray-700 dark:text-gray-300"><%= technique %></span>
+                                             </li>
+                                             <% }) -%>
+                                         </ul>
+                                     </div>
+                                     
+                                     <!-- Model Architecture -->
+                                     <div>
+                                         <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-3">Model Architecture</h5>
+                                         <div class="bg-gray-900 text-gray-100 rounded-xl p-4 font-mono text-sm overflow-x-auto">
+                                             <pre class="whitespace-pre-wrap"><%= technicalSummary.architecture %></pre>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 
+                                 <!-- Training Details -->
+                                 <% if (technicalSummary.trainingDetails && technicalSummary.trainingDetails.length > 0) { -%>
+                                 <div class="mt-6 pt-6 border-t border-gray-300 dark:border-gray-700">
+                                     <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-4">Training Details</h5>
+                                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                         <% technicalSummary.trainingDetails.forEach(function(detail) { -%>
+                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-1"><%= detail.label %></p>
+                                             <p class="text-xl font-bold text-gray-900 dark:text-gray-100"><%= detail.value %></p>
+                                         </div>
+                                         <% }) -%>
+                                     </div>
+                                 </div>
+                                 <% } -%>
+                             </div>
+                             
+                             <!-- Reports for Multimodal Dataset -->
+                             <% if (datasets.multimodal.reports && datasets.multimodal.reports.length > 0) { -%>
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Detailed Reports</h4>
+                                 <div class="space-y-6">
+                                     <% datasets.multimodal.reports.forEach(function(report) { -%>
+                                     <div class="card-flat group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300 hover:translate-x-1">
+                                         <div class="flex flex-col md:flex-row md:items-center justify-between">
+                                             <div class="mb-4 md:mb-0 md:mr-6">
+                                                 <div class="flex items-center mb-3">
+                                                     <span class="badge-<%= report.color %> mr-3">
+                                                         <%= report.number %>
+                                                     </span>
+                                                     <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
+                                                 </div>
+                                                 <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
+                                                 <ul class="space-y-1">
+                                                     <% report.items.forEach(function(item) { -%>
+                                                     <li class="flex items-start text-gray-600 dark:text-gray-400">
+                                                         <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
+                                                         <span><%= item %></span>
+                                                     </li>
+                                                     <% }) -%>
+                                                 </ul>
+                                             </div>
+                                             <a href="<%= report.link %>" 
+                                                class="btn-<%= report.color === 'danger' ? 'outline border-red-300 text-red-600 hover:bg-red-50' : report.color %> inline-flex items-center self-start md:self-center mt-4 md:mt-0">
+                                                 View Full Report
+                                             </a>
+                                         </div>
+                                     </div>
+                                     <% }) -%>
+                                 </div>
+                             </div>
+                             <% } -%>
+                         </div>
+                    </div>
+                </div>
+                
+                <!-- Tab JavaScript -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const tabButtons = document.querySelectorAll('.tab-button');
+                        const tabPanes = document.querySelectorAll('.tab-pane');
+                        
+                        tabButtons.forEach(button => {
+                            button.addEventListener('click', () => {
+                                const tabId = button.getAttribute('data-tab');
+                                
+                                // Update active tab button
+                                tabButtons.forEach(btn => {
+                                    btn.classList.remove('active', 'border-primary-500', 'text-primary-600', 'dark:text-primary-400');
+                                    btn.classList.add('text-gray-500', 'dark:text-gray-400');
+                                });
+                                button.classList.add('active', 'border-primary-500', 'text-primary-600', 'dark:text-primary-400');
+                                button.classList.remove('text-gray-500', 'dark:text-gray-400');
+                                
+                                // Update active tab pane
+                                tabPanes.forEach(pane => {
+                                    pane.classList.remove('active');
+                                    pane.classList.add('hidden');
+                                });
+                                
+                                const activePane = document.getElementById(`${tabId}-tab`);
+                                activePane.classList.remove('hidden');
+                                activePane.classList.add('active');
+                            });
+                        });
+                    });
+                </script>
+                
+                <style>
+                    .tab-button.active {
+                        border-bottom-color: #0ea5e9;
+                        color: #0ea5e9;
+                    }
+                    .dark .tab-button.active {
+                        border-bottom-color: #7dd3fc;
+                        color: #7dd3fc;
+                    }
+                </style>
+            </section>
+            
+
+            
+            <!-- Navigation -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-gray-200">
+                <a href="index.html" class="btn-outline inline-flex items-center">
+                    <i class="bi bi-arrow-left mr-2"></i>
+                    Back to Home
+                </a>
+                <a href="assignment2.html" class="btn-primary inline-flex items-center">
+                    Next: Assignment 2
+                    <i class="bi bi-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <%- component('organisms/Footer/Footer', {
+        site: site,
+        group: group,
+        instructor: instructor,
+        assignment: assignment
+    }) -%>
+    
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('page-loaded');
+        });
+    </script>
+</body>
+</html>

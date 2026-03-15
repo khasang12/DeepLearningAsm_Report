@@ -1,0 +1,72 @@
+<% 
+// Default props
+const variant = typeof variant !== 'undefined' ? variant : 'primary';
+const size = typeof size !== 'undefined' ? size : 'md';
+const fullWidth = typeof fullWidth !== 'undefined' ? fullWidth : false;
+const disabled = typeof disabled !== 'undefined' ? disabled : false;
+const icon = typeof icon !== 'undefined' ? icon : null;
+const iconPosition = typeof iconPosition !== 'undefined' ? iconPosition : 'left';
+const href = typeof href !== 'undefined' ? href : null;
+const type = typeof type !== 'undefined' ? type : 'button';
+const className = typeof className !== 'undefined' ? className : '';
+
+// Base classes
+let buttonClasses = 'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+
+// Variant classes
+const variantClasses = {
+    primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
+    secondary: 'bg-white text-primary-600 border border-primary-200 hover:bg-primary-50 focus:ring-primary-500',
+    outline: 'bg-transparent text-primary-600 border border-primary-300 hover:bg-primary-50 focus:ring-primary-500',
+    ghost: 'bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-500',
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+    success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500',
+    warning: 'bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500',
+    info: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
+};
+
+// Size classes
+const sizeClasses = {
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-6 py-3 text-lg'
+};
+
+// Apply classes
+buttonClasses += ' ' + variantClasses[variant] || variantClasses.primary;
+buttonClasses += ' ' + sizeClasses[size] || sizeClasses.md;
+buttonClasses += fullWidth ? ' w-full' : '';
+buttonClasses += disabled ? ' opacity-50 cursor-not-allowed' : '';
+buttonClasses += ' ' + className;
+
+// Icon rendering
+function renderIcon(iconName) {
+    return `<i class="bi bi-${iconName} ${iconPosition === 'left' ? 'mr-2' : 'ml-2'}"></i>`;
+}
+%>
+
+<% if (href) { -%>
+<a href="<%= disabled ? 'javascript:void(0)' : href %>" 
+   class="<%= buttonClasses %>"
+   <%= disabled ? 'aria-disabled="true"' : '' %>>
+    <% if (icon && iconPosition === 'left') { -%>
+    <i class="bi bi-<%= icon %> mr-2"></i>
+    <% } -%>
+    <slot></slot>
+    <% if (icon && iconPosition === 'right') { -%>
+    <i class="bi bi-<%= icon %> ml-2"></i>
+    <% } -%>
+</a>
+<% } else { -%>
+<button type="<%= type %>" 
+        class="<%= buttonClasses %>"
+        <%= disabled ? 'disabled' : '' %>>
+    <% if (icon && iconPosition === 'left') { -%>
+    <i class="bi bi-<%= icon %> mr-2"></i>
+    <% } -%>
+    <slot></slot>
+    <% if (icon && iconPosition === 'right') { -%>
+    <i class="bi bi-<%= icon %> ml-2"></i>
+    <% } -%>
+</button>
+<% } -%>

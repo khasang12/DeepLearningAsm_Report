@@ -1,0 +1,127 @@
+{
+  "assignment": {
+    "number": 2,
+    "title": "Object Detection",
+    "subtitle": "Deep Learning Project: Object Detection with YOLO/SSD",
+    "topic": "Object Detection",
+    "selectedTopic": "Object Detection",
+    "gradient": "gradient-assignment2",
+    "themeColor": "assignment2"
+  },
+  "reports": [
+    {
+      "number": 1,
+      "title": "EDA Report",
+      "subtitle": "Problem and Dataset Analysis",
+      "items": [
+        "Dataset description and statistics",
+        "Exploratory data visualization",
+        "Problem formulation and challenges",
+        "Data quality assessment"
+      ],
+      "color": "primary",
+      "link": "#"
+    },
+    {
+      "number": 2,
+      "title": "Data Preparation Report",
+      "subtitle": "Dataset, DataLoader, and Augmentation Techniques",
+      "items": [
+        "Data preprocessing pipeline",
+        "DataLoader implementation",
+        "Augmentation strategies (rotation, flip, crop, etc.)",
+        "Train/Validation/Test split methodology"
+      ],
+      "color": "success",
+      "link": "#"
+    },
+    {
+      "number": 3,
+      "title": "Methodology Report",
+      "subtitle": "Construction, Training, Evaluation, and Comparison of at least 2 Methods",
+      "items": [
+        "Method 1: [e.g., CNN-based approach]",
+        "Method 2: [e.g., Transformer-based approach]",
+        "Architecture details and hyperparameters",
+        "Training procedure and optimization",
+        "Evaluation metrics and comparison"
+      ],
+      "color": "info",
+      "link": "#"
+    },
+    {
+      "number": 4,
+      "title": "Experimental Results",
+      "subtitle": "Tables, Charts, Analysis, and Discussion",
+      "items": [
+        "Quantitative results comparison",
+        "Visualization of model predictions",
+        "Statistical analysis and significance testing",
+        "Error analysis and failure cases",
+        "Discussion of findings and insights"
+      ],
+      "color": "warning",
+      "link": "#"
+    },
+    {
+      "number": 5,
+      "title": "Extension Reports",
+      "subtitle": "Additional Experiments/Improvements (if applicable)",
+      "items": [
+        "Ablation studies on model components",
+        "Hyperparameter optimization results",
+        "Alternative architectures explored",
+        "Ensemble methods and their performance",
+        "Computational efficiency analysis"
+      ],
+      "color": "danger",
+      "link": "#"
+    }
+  ],
+  "methodologyComparison": {
+    "title": "Methodology Comparison",
+    "description": "Comparison of at least 2 different methods as required by Section 6.1.2:",
+    "columns": ["Method", "Architecture", "Accuracy", "Precision", "Recall", "F1-Score", "Training Time", "Parameters"],
+    "rows": [
+      {
+        "method": "Method 1",
+        "description": "e.g., CNN-based",
+        "architecture": "ResNet-50",
+        "accuracy": "94.2%",
+        "precision": "93.8%",
+        "recall": "94.1%",
+        "f1Score": "93.9%",
+        "trainingTime": "3.2 hours",
+        "parameters": "25.6M"
+      },
+      {
+        "method": "Method 2",
+        "description": "e.g., Transformer-based",
+        "architecture": "ViT-Base",
+        "accuracy": "95.1%",
+        "precision": "94.8%",
+        "recall": "95.0%",
+        "f1Score": "94.9%",
+        "trainingTime": "5.8 hours",
+        "parameters": "86.7M"
+      },
+      {
+        "method": "Ensemble",
+        "description": "Method 1 + Method 2",
+        "architecture": "Combined",
+        "accuracy": "96.3%",
+        "precision": "96.1%",
+        "recall": "96.2%",
+        "f1Score": "96.1%",
+        "trainingTime": "9.0 hours",
+        "parameters": "112.3M",
+        "highlight": true
+      }
+    ]
+  },
+  "deliverableLinks": {
+    "demoVideo": "#",
+    "presentationVideo": "#",
+    "sourceCode": "#"
+  }
+}

@@ -1,0 +1,323 @@
+{
+  "assignment": {
+    "number": 1,
+    "title": "Classification Tasks",
+    "subtitle": "Image, Text, and Multimodal Classification",
+    "topic": "Classification",
+    "gradient": "gradient-assignment1",
+    "themeColor": "assignment1"
+  },
+  "datasets": {
+    "image": {
+      "name": "Image Dataset",
+      "type": "Image",
+      "description": "CIFAR-10 image classification with CNN",
+      "results": {
+        "summary": "Image classification results on CIFAR-10 test dataset:",
+        "metrics": [
+          { "label": "Accuracy", "value": "92.5%", "highlight": true },
+          { "label": "Precision", "value": "91.8%" },
+          { "label": "Recall", "value": "92.1%" },
+          { "label": "F1-Score", "value": "91.9%" }
+        ],
+        "confusionMatrix": {
+          "description": "[Confusion matrix for image classification]",
+          "note": "10 classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck"
+        },
+        "observations": [
+          "CNN achieved 92.5% accuracy on CIFAR-10 test set",
+          "Highest precision: Automobile class (95.2%)",
+          "Lowest recall: Cat class (88.3%) due to similarity with dog class",
+          "Data augmentation improved generalization by ~5%"
+        ]
+      },
+      "reports": [
+        {
+          "number": 1,
+          "title": "EDA Report",
+          "subtitle": "Problem and Dataset Analysis",
+          "items": [
+            "CIFAR-10 dataset analysis: 60,000 32x32 color images in 10 classes",
+            "Class distribution analysis and visualization",
+            "Image quality assessment and preprocessing requirements",
+            "Exploratory data visualization with sample images per class"
+          ],
+          "color": "primary",
+          "link": "#"
+        },
+        {
+          "number": 2,
+          "title": "Data Preparation Report",
+          "subtitle": "Dataset, DataLoader, and Augmentation Techniques",
+          "items": [
+            "Image preprocessing: normalization (mean=[0.5,0.5,0.5], std=[0.5,0.5,0.5])",
+            "Data augmentation: random horizontal flip, random rotation (±10°), color jitter",
+            "Train/Validation/Test split: 45,000/5,000/10,000 images",
+            "DataLoader configuration with batch size 32 and shuffling"
+          ],
+          "color": "success",
+          "link": "#"
+        },
+        {
+          "number": 3,
+          "title": "Methodology Report",
+          "subtitle": "Construction, Training, Evaluation, and Comparison of CNN Models",
+          "items": [
+            "CNN architecture: Conv2D → BatchNorm → ReLU → MaxPool blocks",
+            "Model 1: Simple CNN (3 convolutional layers)",
+            "Model 2: ResNet-18 with transfer learning",
+            "Training: Adam optimizer (lr=0.001), cross-entropy loss, 50 epochs",
+            "Evaluation metrics: Accuracy, Precision, Recall, F1-Score"
+          ],
+          "color": "info",
+          "link": "#"
+        },
+        {
+          "number": 4,
+          "title": "Experimental Results",
+          "subtitle": "Tables, Charts, Analysis, and Discussion",
+          "items": [
+            "Quantitative results comparison between CNN and ResNet-18",
+            "Confusion matrix visualization for best performing model",
+            "Error analysis: misclassification patterns between similar classes",
+            "Training curves: loss and accuracy over epochs",
+            "Discussion: impact of data augmentation and transfer learning"
+          ],
+          "color": "warning",
+          "link": "#"
+        },
+        {
+          "number": 5,
+          "title": "Extension Reports",
+          "subtitle": "Additional Experiments/Improvements",
+          "items": [
+            "Ablation study: effect of different augmentation techniques",
+            "Hyperparameter optimization: learning rate, batch size, optimizer",
+            "Alternative architectures: VGG, EfficientNet, MobileNet comparison",
+            "Ensemble methods: combining multiple CNN models",
+            "Computational efficiency: inference time and memory usage"
+          ],
+          "color": "danger",
+          "link": "#"
+        }
+      ]
+    },
+    "text": {
+      "name": "Text Dataset",
+      "type": "Text",
+      "description": "IMDB sentiment analysis with RNN/LSTM",
+      "results": {
+        "summary": "Text classification results on IMDB sentiment dataset:",
+        "metrics": [
+          { "label": "Accuracy", "value": "89.2%", "highlight": true },
+          { "label": "Precision", "value": "88.7%" },
+          { "label": "Recall", "value": "89.5%" },
+          { "label": "F1-Score", "value": "89.1%" }
+        ],
+        "confusionMatrix": {
+          "description": "[Confusion matrix for sentiment analysis]",
+          "note": "2 classes: Positive vs Negative sentiment"
+        },
+        "observations": [
+          "LSTM model achieved 89.2% accuracy on IMDB test set",
+          "Model better at identifying positive reviews (91% precision)",
+          "Negative reviews had lower recall (87%) due to sarcasm/irony",
+          "Word embeddings improved performance by ~8%"
+        ]
+      },
+      "reports": [
+        {
+          "number": 1,
+          "title": "EDA Report",
+          "subtitle": "Problem and Dataset Analysis",
+          "items": [
+            "IMDB dataset analysis: 50,000 movie reviews with binary sentiment labels",
+            "Class distribution analysis: balanced (25,000 positive, 25,000 negative)",
+            "Text length analysis and vocabulary size statistics",
+            "Exploratory data visualization: word frequency, sentiment distribution"
+          ],
+          "color": "primary",
+          "link": "#"
+        },
+        {
+          "number": 2,
+          "title": "Data Preparation Report",
+          "subtitle": "Dataset, DataLoader, and Augmentation Techniques",
+          "items": [
+            "Text preprocessing: tokenization, stopword removal, lowercasing",
+            "Sequence padding/truncation to fixed length (500 tokens)",
+            "Word embeddings: GloVe embeddings (300-dimensional)",
+            "Train/Validation/Test split: 40,000/5,000/5,000 reviews",
+            "DataLoader configuration with batch size 32 and shuffling"
+          ],
+          "color": "success",
+          "link": "#"
+        },
+        {
+          "number": 3,
+          "title": "Methodology Report",
+          "subtitle": "Construction, Training, Evaluation, and Comparison of Models",
+          "items": [
+            "RNN/LSTM architecture: embedding layer → LSTM → dense layers",
+            "Model 1: Simple LSTM with 128 hidden units",
+            "Model 2: Bidirectional LSTM with attention mechanism",
+            "Training: Adam optimizer (lr=0.001), cross-entropy loss, 20 epochs",
+            "Evaluation metrics: Accuracy, Precision, Recall, F1-Score"
+          ],
+          "color": "info",
+          "link": "#"
+        },
+        {
+          "number": 4,
+          "title": "Experimental Results",
+          "subtitle": "Tables, Charts, Analysis, and Discussion",
+          "items": [
+            "Quantitative results comparison between LSTM and BiLSTM models",
+            "Confusion matrix visualization for sentiment classification",
+            "Error analysis: misclassification patterns in sarcastic/ironic reviews",
+            "Training curves: loss and accuracy over epochs",
+            "Discussion: impact of word embeddings and attention mechanisms"
+          ],
+          "color": "warning",
+          "link": "#"
+        },
+        {
+          "number": 5,
+          "title": "Extension Reports",
+          "subtitle": "Additional Experiments/Improvements",
+          "items": [
+            "Alternative models: BERT, Transformer-based classifiers",
+            "Hyperparameter optimization: hidden size, dropout, learning rate",
+            "Ensemble methods: combining LSTM and Transformer predictions",
+            "Transfer learning with pre-trained language models",
+            "Computational efficiency: inference time and memory usage"
+          ],
+          "color": "danger",
+          "link": "#"
+        }
+      ]
+    },
+    "multimodal": {
+      "name": "Multimodal Dataset",
+      "type": "Multimodal",
+      "description": "Multimodal classification with image+text",
+      "results": {
+        "summary": "Multimodal classification results on test dataset:",
+        "metrics": [
+          { "label": "Accuracy", "value": "94.8%", "highlight": true },
+          { "label": "Precision", "value": "94.2%" },
+          { "label": "Recall", "value": "94.6%" },
+          { "label": "F1-Score", "value": "94.4%" }
+        ],
+        "confusionMatrix": {
+          "description": "[Confusion matrix for multimodal classification]",
+          "note": "Combined image and text features"
+        },
+        "observations": [
+          "Multimodal fusion achieved 94.8% accuracy (best overall)",
+          "Late fusion outperformed early fusion by 3.2%",
+          "Attention mechanism improved cross-modal alignment",
+          "Text features complemented visual features for ambiguous cases"
+        ]
+      },
+      "reports": [
+        {
+          "number": 1,
+          "title": "EDA Report",
+          "subtitle": "Problem and Dataset Analysis",
+          "items": [
+            "Multimodal dataset analysis: combined image-text pairs with labels",
+            "Dataset statistics: number of samples, modality alignment verification",
+            "Exploratory analysis: visual features vs textual features correlation",
+            "Challenge analysis: modality gap, missing modalities, noise"
+          ],
+          "color": "primary",
+          "link": "#"
+        },
+        {
+          "number": 2,
+          "title": "Data Preparation Report",
+          "subtitle": "Dataset, DataLoader, and Augmentation Techniques",
+          "items": [
+            "Image preprocessing: resize, normalization, augmentation (flip, rotation)",
+            "Text preprocessing: tokenization, embedding extraction",
+            "Modality alignment: ensuring image-text pair consistency",
+            "Train/Validation/Test split: maintaining modality balance",
+            "DataLoader configuration for heterogeneous multimodal batches"
+          ],
+          "color": "success",
+          "link": "#"
+        },
+        {
+          "number": 3,
+          "title": "Methodology Report",
+          "subtitle": "Construction, Training, Evaluation, and Comparison of Fusion Methods",
+          "items": [
+            "Multimodal fusion architectures: early fusion, late fusion, hybrid fusion",
+            "Model 1: Early fusion with concatenated features",
+            "Model 2: Late fusion with separate encoders and attention mechanism",
+            "Training: Adam optimizer (lr=0.001), cross-entropy loss, 30 epochs",
+            "Evaluation metrics: Accuracy, Precision, Recall, F1-Score"
+          ],
+          "color": "info",
+          "link": "#"
+        },
+        {
+          "number": 4,
+          "title": "Experimental Results",
+          "subtitle": "Tables, Charts, Analysis, and Discussion",
+          "items": [
+            "Quantitative results comparison between different fusion strategies",
+            "Confusion matrix visualization for multimodal classification",
+            "Ablation study: impact of individual modalities on performance",
+            "Training curves: loss and accuracy over epochs",
+            "Discussion: effectiveness of attention mechanisms for cross-modal alignment"
+          ],
+          "color": "warning",
+          "link": "#"
+        },
+        {
+          "number": 5,
+          "title": "Extension Reports",
+          "subtitle": "Additional Experiments/Improvements",
+          "items": [
+            "Alternative fusion methods: transformer-based cross-attention",
+            "Hyperparameter optimization: fusion layer size, dropout rates",
+            "Modality dropout experiments for robustness testing",
+            "Transfer learning with pre-trained visual and language models",
+            "Computational efficiency: trade-offs between fusion complexity and accuracy"
+          ],
+          "color": "danger",
+          "link": "#"
+        }
+      ]
+    }
+  },
+  "technicalSummary": {
+    "title": "Technical Summary",
+    "techniques": [
+      "Convolutional Neural Networks (CNN) for image feature extraction",
+      "Recurrent Neural Networks (RNN/LSTM) for sequential text data",
+      "Multimodal fusion architectures for combining image and text features",
+      "Data Augmentation (rotation, flipping, zoom for images; synonym replacement for text)",
+      "Transfer Learning using pre-trained models (ResNet, VGG, BERT, GPT)",
+      "Batch Normalization for faster convergence",
+      "Dropout Layers for regularization",
+      "Attention mechanisms for cross-modal alignment"
+    ],
+    "architecture": "Image Branch: CNN (ResNet-18)\nText Branch: LSTM with word embeddings\nMultimodal Fusion: Concatenation + Dense layers\nOutput: Softmax classification\n\nTraining: Adam optimizer, learning rate 0.001, batch size 32",
+    "trainingDetails": [
+      { "label": "Total Epochs", "value": "50" },
+      { "label": "Batch Size", "value": "32" },
+      { "label": "Learning Rate", "value": "0.001" },
+      { "label": "Optimizer", "value": "Adam" },
+      { "label": "Loss Function", "value": "Cross-Entropy" },
+      { "label": "Validation Split", "value": "20%" }
+    ]
+  },
+  "deliverableLinks": {
+    "demoVideo": "#",
+    "presentationVideo": "#",
+    "sourceCode": "#"
+  }
+}

@@ -1,0 +1,57 @@
+<% 
+// Default props
+const footerSite = typeof site !== 'undefined' ? site : { course: 'Deep Learning (HK252)', academicYear: '2024-2025', university: '', lastUpdated: 'March 2025' };
+const footerGroup = typeof group !== 'undefined' ? group : { name: '[Group Name]' };
+const footerAssignment = typeof assignment !== 'undefined' ? assignment : null;
+%>
+<footer class="bg-gray-900 text-gray-300 py-12 mt-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left column -->
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">
+                        <% if (footerAssignment && footerAssignment.number) { -%>
+                        Assignment <%= footerAssignment.number %> - <%= footerAssignment.title %>
+                        <% } else { -%>
+                        Deep Learning Assignments
+                        <% } -%>
+                    </h3>
+                    <p class="mb-2"><%= footerSite.course %> - Academic Year <%= footerSite.academicYear %></p>
+                    <% if (footerSite.university) { -%>
+                    <p class="mb-2"><%= footerSite.university %></p>
+                    <% } -%>
+                </div>
+                
+                <!-- Right column -->
+                <div class="text-right md:text-left">
+                    <p class="mb-2">Last updated: <%= footerSite.lastUpdated %></p>
+                    <p class="text-gray-400">GitHub Pages for Deep Learning Course Assignments</p>
+                    
+                    <!-- Optional: Add links to PDFs -->
+                    <div class="mt-6 pt-6 border-t border-gray-800">
+                        <p class="text-sm text-gray-500 mb-2">Assignment PDFs:</p>
+                        <div class="flex flex-wrap gap-3">
+                            <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">
+                                <i class="bi bi-file-earmark-pdf mr-1"></i>
+                                Assignment 1 (PDF)
+                            </a>
+                            <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">
+                                <i class="bi bi-file-earmark-pdf mr-1"></i>
+                                Assignment 2 (PDF)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom row -->
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center">
+                <p class="text-sm text-gray-500">
+                    &copy; <%= new Date().getFullYear() %> <%= footerGroup.name %>. 
+                    Built with Atomic Design & Tailwind CSS.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

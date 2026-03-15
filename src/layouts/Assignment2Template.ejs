@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<%- component('organisms/Head/Head', {
+    title: 'Assignment 2 - ' + (assignment.selectedTopic || assignment.title),
+    description: site.description,
+    author: group.name,
+    group: group
+}) -%>
+<body class="min-h-screen bg-gray-50 text-gray-900 font-sans antialiased page-loading dark:bg-gray-900 dark:text-gray-100">
+    
+    <!-- Header -->
+    <%- component('organisms/Header/Header', {
+        title: 'Assignment ' + assignment.number,
+        subtitle: assignment.subtitle,
+        gradient: assignment.gradient,
+        showHomeButton: true,
+        showAssignmentInfo: true,
+        assignmentNumber: assignment.number,
+        themeColor: assignment.themeColor,
+        badgeText: assignment.selectedTopic,
+        group: group,
+        instructor: instructor
+    }) -%>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto space-y-8">
+            
+            <!-- Deliverables Section -->
+            <section class="card">
+                <div class="flex items-center mb-6">
+                    <i class="bi bi-box-seam-fill text-2xl text-primary-600 mr-3"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">Deliverables</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Demo Video -->
+                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                        <i class="bi bi-play-btn-fill text-3xl text-red-500 mr-4"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.demoVideo.label %></h3>
+                            <p class="text-sm text-gray-600 mb-3"><%= deliverables.demoVideo.description %></p>
+                            <a href="<%= deliverableLinks.demoVideo %>" 
+                               class="btn-outline text-sm py-1.5 px-3 border-red-300 text-red-600 hover:bg-red-50">
+                                Watch Video
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Presentation Video -->
+                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                        <i class="bi bi-youtube text-3xl text-red-500 mr-4"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.presentationVideo.label %></h3>
+                            <p class="text-sm text-gray-600 mb-3"><%= deliverables.presentationVideo.description %></p>
+                            <a href="<%= deliverableLinks.presentationVideo %>" 
+                               class="btn-outline text-sm py-1.5 px-3 border-red-300 text-red-600 hover:bg-red-50">
+                                Watch on YouTube
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Source Code -->
+                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                        <i class="bi bi-github text-3xl text-gray-700 mr-4"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.sourceCode.label %></h3>
+                            <p class="text-sm text-gray-600 mb-3"><%= deliverables.sourceCode.description %></p>
+                            <a href="<%= deliverableLinks.sourceCode %>" 
+                               class="btn-outline text-sm py-1.5 px-3 border-gray-300 text-gray-700 hover:bg-gray-50">
+                                View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Detailed Reports Section -->
+            <section class="card">
+                <div class="flex items-center mb-6">
+                    <i class="bi bi-folder-fill text-2xl text-green-600 mr-3"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">Detailed Reports</h2>
+                </div>
+                
+                <p class="text-lg text-gray-700 mb-8">Following Section 6.1.2 requirements from assignment2-vne.pdf</p>
+                
+                <!-- Reports Grid -->
+                <div class="space-y-6">
+                    <% reports.forEach(function(report) { -%>
+                    <div class="card-flat group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300 hover:translate-x-1">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between">
+                            <div class="mb-4 md:mb-0 md:mr-6">
+                                <div class="flex items-center mb-3">
+                                    <span class="badge-<%= report.color %> mr-3">
+                                        <%= report.number %>
+                                    </span>
+                                    <h3 class="text-xl font-semibold text-gray-900"><%= report.title %></h3>
+                                </div>
+                                <p class="text-gray-700 font-medium mb-3"><%= report.subtitle %></p>
+                                <ul class="space-y-1">
+                                    <% report.items.forEach(function(item) { -%>
+                                    <li class="flex items-start text-gray-600">
+                                        <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
+                                        <span><%= item %></span>
+                                    </li>
+                                    <% }) -%>
+                                </ul>
+                            </div>
+                            <a href="<%= report.link %>" 
+                               class="btn-<%= report.color === 'danger' ? 'outline border-red-300 text-red-600 hover:bg-red-50' : report.color %> inline-flex items-center self-start md:self-center">
+                                View Full Report
+                            </a>
+                        </div>
+                    </div>
+                    <% }) -%>
+                </div>
+                
+                <!-- Note -->
+                <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                    <div class="flex items-start">
+                        <i class="bi bi-info-circle-fill text-blue-500 mr-3 mt-0.5"></i>
+                        <div>
+                            <p class="text-blue-800 font-medium">Note</p>
+                            <p class="text-blue-700 text-sm mt-1">
+                                Each report can be linked to separate PDF/HTML files or expanded inline sections. 
+                                The links above are placeholders for the actual report content.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Methodology Comparison Section -->
+            <section class="card">
+                <div class="flex items-center mb-6">
+                    <i class="bi bi-clipboard-data-fill text-2xl text-purple-600 mr-3"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">Methodology Comparison</h2>
+                </div>
+                
+                <p class="text-lg text-gray-700 mb-8"><%= methodologyComparison.description %></p>
+                
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <% methodologyComparison.columns.forEach(function(column) { -%>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <%= column %>
+                                </th>
+                                <% }) -%>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <% methodologyComparison.rows.forEach(function(row, index) { -%>
+                            <tr class="<%= row.highlight ? 'bg-green-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50' %> hover:bg-gray-100 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="font-medium text-gray-900"><%= row.method %></div>
+                                    <div class="text-sm text-gray-500"><%= row.description %></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900"><%= row.architecture %></td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="font-semibold <%= row.highlight ? 'text-green-600' : 'text-gray-900' %>">
+                                        <%= row.accuracy %>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900"><%= row.precision %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900"><%= row.recall %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900"><%= row.f1Score %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900"><%= row.trainingTime %></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-900"><%= row.parameters %></td>
+                            </tr>
+                            <% }) -%>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Navigation -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-gray-200">
+                <a href="assignment1.html" class="btn-outline inline-flex items-center">
+                    <i class="bi bi-arrow-left mr-2"></i>
+                    Back to Assignment 1
+                </a>
+                <a href="index.html" class="btn-primary inline-flex items-center">
+                    Return to Home
+                    <i class="bi bi-house-door ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <%- component('organisms/Footer/Footer', {
+        site: site,
+        group: group,
+        instructor: instructor,
+        assignment: assignment
+    }) -%>
+    
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('page-loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+{
+  "name": "Button",
+  "category": "Atoms",
+  "description": "A versatile button component with multiple variants and sizes.",
+  "props": [
+    {
+      "name": "variant",
+      "type": "string",
+      "default": "primary",
+      "options": ["primary", "secondary", "outline", "ghost", "danger", "success", "warning", "info"],
+      "description": "Visual style variant of the button"
+    },
+    {
+      "name": "size",
+      "type": "string", 
+      "default": "md",
+      "options": ["sm", "md", "lg"],
+      "description": "Size of the button"
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether the button should take full width of its container"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether the button is disabled"
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "null",
+      "description": "Bootstrap Icon name (without 'bi-' prefix)"
+    },
+    {
+      "name": "iconPosition",
+      "type": "string",
+      "default": "left",
+      "options": ["left", "right"],
+      "description": "Position of the icon relative to the text"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "default": "null",
+      "description": "If provided, renders an <a> tag instead of <button>"
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "default": "button",
+      "description": "Button type attribute (button, submit, reset)"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "default": "",
+      "description": "Additional CSS classes"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "description": "Button label/content"
+    }
+  ],
+  "examples": [
+    {
+      "name": "Primary Button",
+      "code": "<Button variant=\"primary\">Click me</Button>"
+    },
+    {
+      "name": "Button with Icon",
+      "code": "<Button variant=\"secondary\" icon=\"arrow-right\" iconPosition=\"right\">Next</Button>"
+    },
+    {
+      "name": "Link Button",
+      "code": "<Button variant=\"outline\" href=\"/about\">About</Button>"
+    }
+  ]
+}

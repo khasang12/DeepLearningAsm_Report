@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<%- component('organisms/Head/Head', {
+    title: site.title + ' - Group ' + group.name,
+    description: site.description,
+    author: group.name,
+    group: group
+}) -%>
+<body class="min-h-screen bg-gray-50 text-gray-900 font-sans antialiased page-loading dark:bg-gray-900 dark:text-gray-100">
+    
+    <!-- Header -->
+    <%- component('organisms/Header/Header', {
+        title: site.title,
+        subtitle: site.course + ' - Academic Year ' + site.academicYear,
+        gradient: gradient || 'gradient-home',
+        showHomeButton: false,
+        showAssignmentInfo: false,
+        group: group,
+        instructor: instructor
+    }) -%>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto">            
+            <!-- Assignments Navigation -->
+            <div class="mb-12">
+                <div class="flex items-center mb-8">
+                    <i class="bi bi-link-45deg text-2xl text-primary-600 mr-3"></i>
+                    <h2 class="text-2xl font-bold text-gray-900">Assignments Navigation</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Assignment 1 Card -->
+                    <div class="card group hover:border-primary-200 transition-all duration-300">
+                        <div class="text-center p-6">
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 text-primary-600 mb-4 group-hover:bg-primary-200 transition-colors">
+                                <i class="bi bi-file-earmark-text-fill text-3xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Assignment 1</h3>
+                            <p class="text-gray-600 mb-6">Image Classification with CNN</p>
+                            <a href="<%= navigation.assignment1 %>" 
+                               class="btn-primary inline-flex items-center">
+                                View Assignment 1
+                                <i class="bi bi-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Assignment 2 Card -->
+                    <div class="card group hover:border-purple-200 transition-all duration-300">
+                        <div class="text-center p-6">
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 text-purple-600 mb-4 group-hover:bg-purple-200 transition-colors">
+                                <i class="bi bi-file-earmark-text-fill text-3xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Assignment 2</h3>
+                            <p class="text-gray-600 mb-6">[Selected Topic: Segmentation / Detection / Recognition / Generation]</p>
+                            <a href="<%= navigation.assignment2 %>" 
+                               class="btn-primary inline-flex items-center bg-purple-600 hover:bg-purple-700 focus:ring-purple-500">
+                                View Assignment 2
+                                <i class="bi bi-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <%- component('organisms/Footer/Footer', {
+        site: site,
+        group: group,
+        instructor: instructor
+    }) -%>
+    
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('page-loaded');
+        });
+    </script>
+</body>
+</html>

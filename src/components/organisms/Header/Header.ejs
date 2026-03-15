@@ -1,0 +1,84 @@
+<% 
+// Default props
+const headerTitle = typeof title !== 'undefined' ? title : 'Deep Learning Assignments';
+const headerSubtitle = typeof subtitle !== 'undefined' ? subtitle : 'HK252 - Academic Year 2024-2025';
+const headerGradient = typeof gradient !== 'undefined' ? gradient : 'gradient-home';
+const headerShowHomeButton = typeof showHomeButton !== 'undefined' ? showHomeButton : true;
+const headerShowAssignmentInfo = typeof showAssignmentInfo !== 'undefined' ? showAssignmentInfo : true;
+const headerAssignmentNumber = typeof assignmentNumber !== 'undefined' ? assignmentNumber : null;
+const headerThemeColor = typeof themeColor !== 'undefined' ? themeColor : 'home';
+const headerBadgeText = typeof badgeText !== 'undefined' ? badgeText : null;
+const headerGroup = typeof group !== 'undefined' ? group : { name: '[Group Name]', members: ['Member 1', 'Member 2', 'Member 3'] };
+const headerInstructor = typeof instructor !== 'undefined' ? instructor : { name: '[Instructor Name]' };
+%>
+
+<header class="<%= headerGradient %> dark:text-white py-12 md:py-16">
+    <div class="container mx-auto px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Top row with title and home button -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-2"><%= headerTitle %></h1>
+                    <% if (headerSubtitle) { -%>
+                    <p class="text-xl md:text-2xl opacity-90"><%= headerSubtitle %></p>
+                    <% } -%>
+                    
+                    <!-- Badge for Assignment 2 topic -->
+                    <% if (headerBadgeText) { -%>
+                    <div class="mt-4">
+                        <span class="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium">
+                            <%= headerBadgeText %>
+                        </span>
+                        <p class="text-sm opacity-80 mt-2">
+                            Choose from: Segmentation / Object Detection / Recognition / Generation / Other
+                        </p>
+                    </div>
+                    <% } -%>
+                </div>
+                
+                <!-- Home button -->
+                <% if (headerShowHomeButton) { -%>
+                <a href="index.html" 
+                   class="btn bg-white/20 hover:bg-white/30 backdrop-blur-sm border-white/30 inline-flex items-center self-start md:self-center">
+                    <i class="bi bi-house-door-fill mr-2"></i>
+                    Home
+                </a>
+                <% } -%>
+            </div>
+            
+            <!-- Group, Members, and Instructor info -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-white/20">
+                <!-- Group Name -->
+                <div class="flex items-center">
+                    <i class="bi bi-people-fill text-2xl mr-3 opacity-90"></i>
+                    <div>
+                        <p class="text-sm opacity-80">Group</p>
+                        <p class="font-semibold"><%= headerGroup.name %></p>
+                    </div>
+                </div>
+                
+                <!-- Members List -->
+                <div class="flex items-center">
+                    <i class="bi bi-person-lines-fill text-2xl mr-3 opacity-90"></i>
+                    <div>
+                        <p class="text-sm opacity-80">Members</p>
+                        <p class="font-semibold">
+                            <% headerGroup.members.forEach((member, index) => { -%>
+                            <%= member %><%= index < headerGroup.members.length - 1 ? ', ' : '' %>
+                            <% }) -%>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Instructor -->
+                <div class="flex items-center">
+                    <i class="bi bi-person-fill text-2xl mr-3 opacity-90"></i>
+                    <div>
+                        <p class="text-sm opacity-80">Instructor</p>
+                        <p class="font-semibold"><%= headerInstructor.name %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

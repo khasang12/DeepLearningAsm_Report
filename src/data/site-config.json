@@ -1,0 +1,45 @@
+{
+  "site": {
+    "title": "Deep Learning Assignments",
+    "description": "GitHub Pages for Deep Learning course assignments following Section 6 requirements",
+    "course": "Deep Learning (HK252)",
+    "academicYear": "2024-2025",
+    "university": "University of Technology",
+    "lastUpdated": "March 2025"
+  },
+  "group": {
+    "name": "Group 10",
+    "members": [
+      "Kha Sang",
+      "Huynh Tan Loc"
+    ]
+  },
+  "instructor": {
+    "name": "Dr. Le Thanh Sach"
+  },
+  "navigation": {
+    "home": "index.html",
+    "assignment1": "assignment1.html", 
+    "assignment2": "assignment2.html"
+  },
+  "deliverables": {
+    "demoVideo": {
+      "label": "Demo Video",
+      "description": "Screen recording of model inference",
+      "icon": "play-btn-fill",
+      "color": "red"
+    },
+    "presentationVideo": {
+      "label": "Presentation Video", 
+      "description": "YouTube presentation of the project",
+      "icon": "youtube",
+      "color": "red"
+    },
+    "sourceCode": {
+      "label": "Source Code",
+      "description": "GitHub repository with full implementation",
+      "icon": "github",
+      "color": "gray"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+# GitHub Pages Configuration
+title: "Deep Learning Assignments - HK252"
+description: "GitHub Pages for Deep Learning course assignments following Section 6 requirements"
+baseurl: "" # Leave empty if hosting at username.github.io/repo
+url: "" # Leave empty for GitHub Pages default
+
+# Site settings
+theme: null # No theme since we're using custom HTML
+plugins: [] # No Jekyll plugins needed
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Custom variables
+course: "Deep Learning (HK252)"
+academic_year: "2024-2025"
+instructor: "[Instructor Name]"
+group_name: "[Group Name]"
+members:
+  - "[Member 1]"
+  - "[Member 2]"
+  - "[Member 3]"
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - implementation_plan.md
+  - assignment1-vne.pdf
+  - assignment2-vne.pdf
+  - .gitignore
+  - .nojekyll
