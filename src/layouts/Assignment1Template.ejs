@@ -34,7 +34,7 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Demo Video -->
-                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                    <div class="flex items-center p-6 border border-gray-200 rounded-xl hover:border-primary-300 hover:shadow-md transition-all duration-300 shadow-sm">
                         <i class="bi bi-play-btn-fill text-3xl text-red-500 mr-4"></i>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.demoVideo.label %></h3>
@@ -47,7 +47,7 @@
                     </div>
                     
                     <!-- Presentation Video -->
-                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                    <div class="flex items-center p-6 border border-gray-200 rounded-xl hover:border-primary-300 hover:shadow-md transition-all duration-300 shadow-sm">
                         <i class="bi bi-youtube text-3xl text-red-500 mr-4"></i>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.presentationVideo.label %></h3>
@@ -60,7 +60,7 @@
                     </div>
                     
                     <!-- Source Code -->
-                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                    <div class="flex items-center p-6 border border-gray-200 rounded-xl hover:border-primary-300 hover:shadow-md transition-all duration-300 shadow-sm">
                         <i class="bi bi-github text-3xl text-gray-700 mr-4"></i>
                         <div>
                             <h3 class="font-semibold text-gray-900 mb-1"><%= deliverables.sourceCode.label %></h3>
@@ -85,15 +85,15 @@
                 <div class="mb-8">
                     <div class="border-b border-gray-200 dark:border-gray-700">
                         <nav class="flex space-x-1" aria-label="Dataset tabs">
-                            <button data-tab="image" class="tab-button active inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 transition-colors" aria-current="page">
+                            <button data-tab="image" class="tab-button active inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300 transition-all duration-300" aria-current="page">
                                 <i class="bi bi-image mr-2"></i>
                                 Image Dataset
                             </button>
-                            <button data-tab="text" class="tab-button inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 transition-colors">
+                            <button data-tab="text" class="tab-button inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300 transition-all duration-300">
                                 <i class="bi bi-text-paragraph mr-2"></i>
                                 Text Dataset
                             </button>
-                            <button data-tab="multimodal" class="tab-button inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 transition-colors">
+                            <button data-tab="multimodal" class="tab-button inline-flex items-center px-4 py-3 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300 transition-all duration-300">
                                 <i class="bi bi-layers mr-2"></i>
                                 Multimodal Dataset
                             </button>
@@ -110,13 +110,13 @@
                             <p class="text-gray-700 dark:text-gray-300 mb-6"><%= datasets.image.description %></p>
                             <p class="text-lg text-gray-700 dark:text-gray-300 mb-8"><%= datasets.image.results.summary %></p>
                             
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                <!-- Performance Metrics -->
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                                <!-- Performance Metrics
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Performance Metrics</h4>
                                     <div class="space-y-4">
                                         <% datasets.image.results.metrics.forEach(function(metric) { -%>
-                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 shadow-xs">
                                             <span class="text-gray-700 dark:text-gray-300"><%= metric.label %></span>
                                             <span class="text-lg font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
                                                 <%= metric.value %>
@@ -124,15 +124,14 @@
                                         </div>
                                         <% }) -%>
                                     </div>
-                                </div>
+                                </div> -->
                                 
-                                <!-- Confusion Matrix -->
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
-                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrix</h4>
-                                    <div class="flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-                                        <i class="bi bi-diagram-3 text-5xl text-gray-400 dark:text-gray-500 mb-4"></i>
-                                        <p class="text-gray-700 dark:text-gray-300 text-center mb-2"><%= datasets.image.results.confusionMatrix.description %></p>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center"><%= datasets.image.results.confusionMatrix.note %></p>
+                                <!-- Model Metrics Visualization -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Model Performance Comparison</h4>
+                                    <div class="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <img src="assets/image_metrics.png" alt="Model Performance Metrics Comparison" class="w-full h-auto rounded-lg">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4"><%= datasets.image.results.confusionMatrix.note %></p>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +150,18 @@
                                  </ul>
                              </div>
                              <% } -%>
-                             
+
+                             <!-- Model Efficiency Visualization -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Model Efficiency Analysis</h4>
+                                 <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+                                     <div class="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                         <img src="assets/image_efficiency.png" alt="Model Efficiency Trade-offs" class="w-full h-auto rounded-lg max-w-2xl mx-auto">
+                                         <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">Accuracy vs. Parameters vs. Inference Time across models (MobileNetV3, ResNet50, ViT-B/16)</p>
+                                     </div>
+                                 </div>
+                             </div>
+
                              <!-- Technical Summary for Image Dataset -->
                              <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
                                  <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Technical Summary</h4>
@@ -184,7 +194,7 @@
                                      <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-4">Training Details</h5>
                                      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                          <% technicalSummary.trainingDetails.forEach(function(detail) { -%>
-                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700">
+                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700 shadow-xs">
                                              <p class="text-sm text-gray-500 dark:text-gray-400 mb-1"><%= detail.label %></p>
                                              <p class="text-xl font-bold text-gray-900 dark:text-gray-100"><%= detail.value %></p>
                                          </div>
@@ -197,32 +207,37 @@
                              <!-- Reports for Image Dataset -->
                              <% if (datasets.image.reports && datasets.image.reports.length > 0) { -%>
                              <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Detailed Reports</h4>
-                                 <div class="space-y-6">
+                                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Detailed Reports</h4>
+                                     <% if (datasets.image.notebookLink) { -%>
+                                     <a href="<%= datasets.image.notebookLink %>"
+                                        class="btn-primary inline-flex items-center mt-4 md:mt-0 px-5 py-2.5"
+                                        target="_blank" rel="noopener noreferrer">
+                                         <i class="bi bi-journal-code mr-2"></i>
+                                         Open Complete Notebook
+                                     </a>
+                                     <% } -%>
+                                 </div>
+
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                      <% datasets.image.reports.forEach(function(report) { -%>
-                                     <div class="card-flat group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300 hover:translate-x-1">
-                                         <div class="flex flex-col md:flex-row md:items-center justify-between">
-                                             <div class="mb-4 md:mb-0 md:mr-6">
-                                                 <div class="flex items-center mb-3">
-                                                     <span class="badge-<%= report.color %> mr-3">
-                                                         <%= report.number %>
-                                                     </span>
-                                                     <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
-                                                 </div>
-                                                 <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
-                                                 <ul class="space-y-1">
-                                                     <% report.items.forEach(function(item) { -%>
-                                                     <li class="flex items-start text-gray-600 dark:text-gray-400">
-                                                         <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
-                                                         <span><%= item %></span>
-                                                     </li>
-                                                     <% }) -%>
-                                                 </ul>
+                                     <div class="card-flat shadow-sm group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300">
+                                         <div class="mb-4">
+                                             <div class="flex items-center mb-3">
+                                                 <span class="badge-<%= report.color %> mr-3">
+                                                     <%= report.number %>
+                                                 </span>
+                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
                                              </div>
-                                             <a href="<%= report.link %>" 
-                                                class="btn-<%= report.color === 'danger' ? 'outline border-red-300 text-red-600 hover:bg-red-50' : report.color %> inline-flex items-center self-start md:self-center mt-4 md:mt-0">
-                                                 View Full Report
-                                             </a>
+                                             <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
+                                             <ul class="space-y-1">
+                                                 <% report.items.forEach(function(item) { -%>
+                                                 <li class="flex items-start text-gray-600 dark:text-gray-400">
+                                                     <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
+                                                     <span><%= item %></span>
+                                                 </li>
+                                                 <% }) -%>
+                                             </ul>
                                          </div>
                                      </div>
                                      <% }) -%>
@@ -241,11 +256,11 @@
                             
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                 <!-- Performance Metrics -->
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Performance Metrics</h4>
                                     <div class="space-y-4">
                                         <% datasets.text.results.metrics.forEach(function(metric) { -%>
-                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 shadow-xs">
                                             <span class="text-gray-700 dark:text-gray-300"><%= metric.label %></span>
                                             <span class="text-lg font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
                                                 <%= metric.value %>
@@ -256,7 +271,7 @@
                                 </div>
                                 
                                 <!-- Confusion Matrix -->
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrix</h4>
                                     <div class="flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                                         <i class="bi bi-diagram-3 text-5xl text-gray-400 dark:text-gray-500 mb-4"></i>
@@ -313,7 +328,7 @@
                                      <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-4">Training Details</h5>
                                      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                          <% technicalSummary.trainingDetails.forEach(function(detail) { -%>
-                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700">
+                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700 shadow-xs">
                                              <p class="text-sm text-gray-500 dark:text-gray-400 mb-1"><%= detail.label %></p>
                                              <p class="text-xl font-bold text-gray-900 dark:text-gray-100"><%= detail.value %></p>
                                          </div>
@@ -326,32 +341,37 @@
                              <!-- Reports for Text Dataset -->
                              <% if (datasets.text.reports && datasets.text.reports.length > 0) { -%>
                              <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Detailed Reports</h4>
-                                 <div class="space-y-6">
+                                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Detailed Reports</h4>
+                                     <% if (datasets.text.notebookLink) { -%>
+                                     <a href="<%= datasets.text.notebookLink %>"
+                                        class="btn-primary inline-flex items-center mt-4 md:mt-0 px-5 py-2.5"
+                                        target="_blank" rel="noopener noreferrer">
+                                         <i class="bi bi-journal-code mr-2"></i>
+                                         Open Complete Notebook
+                                     </a>
+                                     <% } -%>
+                                 </div>
+
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                      <% datasets.text.reports.forEach(function(report) { -%>
-                                     <div class="card-flat group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300 hover:translate-x-1">
-                                         <div class="flex flex-col md:flex-row md:items-center justify-between">
-                                             <div class="mb-4 md:mb-0 md:mr-6">
-                                                 <div class="flex items-center mb-3">
-                                                     <span class="badge-<%= report.color %> mr-3">
-                                                         <%= report.number %>
-                                                     </span>
-                                                     <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
-                                                 </div>
-                                                 <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
-                                                 <ul class="space-y-1">
-                                                     <% report.items.forEach(function(item) { -%>
-                                                     <li class="flex items-start text-gray-600 dark:text-gray-400">
-                                                         <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
-                                                         <span><%= item %></span>
-                                                     </li>
-                                                     <% }) -%>
-                                                 </ul>
+                                     <div class="card-flat shadow-sm group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300">
+                                         <div class="mb-4">
+                                             <div class="flex items-center mb-3">
+                                                 <span class="badge-<%= report.color %> mr-3">
+                                                     <%= report.number %>
+                                                 </span>
+                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
                                              </div>
-                                             <a href="<%= report.link %>" 
-                                                class="btn-<%= report.color === 'danger' ? 'outline border-red-300 text-red-600 hover:bg-red-50' : report.color %> inline-flex items-center self-start md:self-center mt-4 md:mt-0">
-                                                 View Full Report
-                                             </a>
+                                             <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
+                                             <ul class="space-y-1">
+                                                 <% report.items.forEach(function(item) { -%>
+                                                 <li class="flex items-start text-gray-600 dark:text-gray-400">
+                                                     <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
+                                                     <span><%= item %></span>
+                                                 </li>
+                                                 <% }) -%>
+                                             </ul>
                                          </div>
                                      </div>
                                      <% }) -%>
@@ -370,11 +390,11 @@
                             
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                 <!-- Performance Metrics -->
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Performance Metrics</h4>
                                     <div class="space-y-4">
                                         <% datasets.multimodal.results.metrics.forEach(function(metric) { -%>
-                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 shadow-xs">
                                             <span class="text-gray-700 dark:text-gray-300"><%= metric.label %></span>
                                             <span class="text-lg font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
                                                 <%= metric.value %>
@@ -385,7 +405,7 @@
                                 </div>
                                 
                                 <!-- Confusion Matrix -->
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6">
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrix</h4>
                                     <div class="flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
                                         <i class="bi bi-diagram-3 text-5xl text-gray-400 dark:text-gray-500 mb-4"></i>
@@ -442,7 +462,7 @@
                                      <h5 class="font-medium text-gray-900 dark:text-gray-100 mb-4">Training Details</h5>
                                      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                          <% technicalSummary.trainingDetails.forEach(function(detail) { -%>
-                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700">
+                                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center border border-gray-200 dark:border-gray-700 shadow-xs">
                                              <p class="text-sm text-gray-500 dark:text-gray-400 mb-1"><%= detail.label %></p>
                                              <p class="text-xl font-bold text-gray-900 dark:text-gray-100"><%= detail.value %></p>
                                          </div>
@@ -455,32 +475,37 @@
                              <!-- Reports for Multimodal Dataset -->
                              <% if (datasets.multimodal.reports && datasets.multimodal.reports.length > 0) { -%>
                              <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Detailed Reports</h4>
-                                 <div class="space-y-6">
+                                 <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Detailed Reports</h4>
+                                     <% if (datasets.multimodal.notebookLink) { -%>
+                                     <a href="<%= datasets.multimodal.notebookLink %>"
+                                        class="btn-primary inline-flex items-center mt-4 md:mt-0 px-5 py-2.5"
+                                        target="_blank" rel="noopener noreferrer">
+                                         <i class="bi bi-journal-code mr-2"></i>
+                                         Open Complete Notebook
+                                     </a>
+                                     <% } -%>
+                                 </div>
+
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                      <% datasets.multimodal.reports.forEach(function(report) { -%>
-                                     <div class="card-flat group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300 hover:translate-x-1">
-                                         <div class="flex flex-col md:flex-row md:items-center justify-between">
-                                             <div class="mb-4 md:mb-0 md:mr-6">
-                                                 <div class="flex items-center mb-3">
-                                                     <span class="badge-<%= report.color %> mr-3">
-                                                         <%= report.number %>
-                                                     </span>
-                                                     <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
-                                                 </div>
-                                                 <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
-                                                 <ul class="space-y-1">
-                                                     <% report.items.forEach(function(item) { -%>
-                                                     <li class="flex items-start text-gray-600 dark:text-gray-400">
-                                                         <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
-                                                         <span><%= item %></span>
-                                                     </li>
-                                                     <% }) -%>
-                                                 </ul>
+                                     <div class="card-flat shadow-sm group hover:border-<%= report.color === 'danger' ? 'red' : report.color %>-300 border-l-4 border-<%= report.color === 'danger' ? 'red' : report.color %>-500 transition-all duration-300">
+                                         <div class="mb-4">
+                                             <div class="flex items-center mb-3">
+                                                 <span class="badge-<%= report.color %> mr-3">
+                                                     <%= report.number %>
+                                                 </span>
+                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-gray-100"><%= report.title %></h5>
                                              </div>
-                                             <a href="<%= report.link %>" 
-                                                class="btn-<%= report.color === 'danger' ? 'outline border-red-300 text-red-600 hover:bg-red-50' : report.color %> inline-flex items-center self-start md:self-center mt-4 md:mt-0">
-                                                 View Full Report
-                                             </a>
+                                             <p class="text-gray-700 dark:text-gray-300 font-medium mb-3"><%= report.subtitle %></p>
+                                             <ul class="space-y-1">
+                                                 <% report.items.forEach(function(item) { -%>
+                                                 <li class="flex items-start text-gray-600 dark:text-gray-400">
+                                                     <i class="bi bi-dot text-lg mr-1 mt-0.5"></i>
+                                                     <span><%= item %></span>
+                                                 </li>
+                                                 <% }) -%>
+                                             </ul>
                                          </div>
                                      </div>
                                      <% }) -%>

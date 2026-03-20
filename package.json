@@ -10,7 +10,7 @@
     "build:pages": "node build.js --pages",
     "build:css": "npx postcss src/styles/input.css -o dist/styles.css --env production",
     "build:css:dev": "npx postcss src/styles/input.css -o dist/styles.css",
-    "build:copy": "cp _config.yml .nojekyll dist/",
+    "build:copy": "mkdir -p dist/data && cp -r src/assets dist/ && cp src/data/*.ipynb dist/data/ 2>/dev/null || true && cp _config.yml .nojekyll dist/",
     "build:watch": "npx nodemon --legacy-watch --watch src -e ejs,json,css --exec npm run build:pages",
     "serve": "npx live-server dist --port=3000 --watch=dist",
     "preview": "npm run build && npx live-server dist --port=3000"

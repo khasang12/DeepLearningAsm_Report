@@ -11,24 +11,25 @@
     "image": {
       "name": "Image Dataset",
       "type": "Image",
-      "description": "CIFAR-10 image classification with CNN",
+      "description": "CIFAR-100 image classification with CNN, ViT, and Ensemble models",
+      "notebookLink": "https://github.com/khasang12/DeepLearningAsm1_Classification/blob/main/src/notebooks/Report_Image.ipynb",
       "results": {
-        "summary": "Image classification results on CIFAR-10 test dataset:",
+        "summary": "Image classification results on CIFAR-100 test dataset: Ensemble of ResNet50 and ViT-B/16 models",
         "metrics": [
-          { "label": "Accuracy", "value": "92.5%", "highlight": true },
-          { "label": "Precision", "value": "91.8%" },
-          { "label": "Recall", "value": "92.1%" },
-          { "label": "F1-Score", "value": "91.9%" }
+          { "label": "Accuracy", "value": "81.19%", "highlight": true },
+          { "label": "Precision", "value": "81.54%" },
+          { "label": "Recall", "value": "81.19%" },
+          { "label": "F1-Score", "value": "81.06%" }
         ],
         "confusionMatrix": {
-          "description": "[Confusion matrix for image classification]",
-          "note": "10 classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck"
+          "description": "Confusion matrix for CIFAR-100 classification showing model performance across 100 classes",
+          "note": "100 classes across 20 supercategories (e.g., aquatic mammals, fish, flowers, vehicles, etc.)"
         },
         "observations": [
-          "CNN achieved 92.5% accuracy on CIFAR-10 test set",
-          "Highest precision: Automobile class (95.2%)",
-          "Lowest recall: Cat class (88.3%) due to similarity with dog class",
-          "Data augmentation improved generalization by ~5%"
+          "ViT-B/16 outperformed ResNet50 (81.27% vs 55.01% accuracy) due to better global context modeling",
+          "Ensemble of ResNet50 and ViT-B/16 achieved 81.19% accuracy, combining local texture and global attention strengths",
+          "ViT showed greater robustness to Gaussian noise (10% std) with only 2% accuracy drop compared to CNN's 5% drop",
+          "MobileNetV3-small struggled with CIFAR-100 (1.17% accuracy), highlighting challenges for lightweight architectures on fine-grained classification"
         ]
       },
       "reports": [
@@ -37,10 +38,10 @@
           "title": "EDA Report",
           "subtitle": "Problem and Dataset Analysis",
           "items": [
-            "CIFAR-10 dataset analysis: 60,000 32x32 color images in 10 classes",
-            "Class distribution analysis and visualization",
-            "Image quality assessment and preprocessing requirements",
-            "Exploratory data visualization with sample images per class"
+            "CIFAR-100 dataset analysis: 60,000 32x32 color images in 100 classes across 20 supercategories",
+            "Perfect class balance with exactly 500 training images per class",
+            "Channel imbalance analysis: Blue channel darker, prevalence of white backgrounds",
+            "Spatial center bias identified through average image analysis"
           ],
           "color": "primary",
           "link": "#"
@@ -50,10 +51,10 @@
           "title": "Data Preparation Report",
           "subtitle": "Dataset, DataLoader, and Augmentation Techniques",
           "items": [
-            "Image preprocessing: normalization (mean=[0.5,0.5,0.5], std=[0.5,0.5,0.5])",
-            "Data augmentation: random horizontal flip, random rotation (±10°), color jitter",
-            "Train/Validation/Test split: 45,000/5,000/10,000 images",
-            "DataLoader configuration with batch size 32 and shuffling"
+            "Image preprocessing: resize to 224x224, normalization with CIFAR-100 mean/std",
+            "Data augmentation: random horizontal flip (p=0.5), color jitter (brightness, contrast, saturation, hue)",
+            "Train/Test split: 50,000 training images, 10,000 test images",
+            "DataLoader configuration with batch size 128 and pin_memory for GPU acceleration"
           ],
           "color": "success",
           "link": "#"
@@ -61,13 +62,13 @@
         {
           "number": 3,
           "title": "Methodology Report",
-          "subtitle": "Construction, Training, Evaluation, and Comparison of CNN Models",
+          "subtitle": "Construction, Training, Evaluation, and Comparison of CNN, ViT, and Ensemble Models",
           "items": [
-            "CNN architecture: Conv2D → BatchNorm → ReLU → MaxPool blocks",
-            "Model 1: Simple CNN (3 convolutional layers)",
-            "Model 2: ResNet-18 with transfer learning",
-            "Training: Adam optimizer (lr=0.001), cross-entropy loss, 50 epochs",
-            "Evaluation metrics: Accuracy, Precision, Recall, F1-Score"
+            "Model architectures: ResNet50 (CNN), ViT-B/16 (Vision Transformer), MobileNetV3-small (lightweight CNN)",
+            "Transfer learning: Pretrained ImageNet backbones frozen, only final classification head trained",
+            "Training: Adam optimizer (lr=0.001), cross-entropy loss, 5 epochs",
+            "Evaluation metrics: Accuracy, Precision, Recall, F1-Score (macro average)",
+            "Ensemble method: Soft voting averaging probabilities from ResNet50 and ViT-B/16"
           ],
           "color": "info",
           "link": "#"
@@ -77,11 +78,11 @@
           "title": "Experimental Results",
           "subtitle": "Tables, Charts, Analysis, and Discussion",
           "items": [
-            "Quantitative results comparison between CNN and ResNet-18",
-            "Confusion matrix visualization for best performing model",
-            "Error analysis: misclassification patterns between similar classes",
-            "Training curves: loss and accuracy over epochs",
-            "Discussion: impact of data augmentation and transfer learning"
+            "Quantitative results comparison: ResNet50 (55.01%), ViT-B/16 (81.27%), MobileNetV3 (1.17%), Ensemble (81.19%)",
+            "Confusion matrix visualization for ViT-B/16 showing error patterns across 100 classes",
+            "Error analysis: Top 5 most confused class pairs (e.g., 'apple' vs 'pear', 'dolphin' vs 'whale')",
+            "Training curves: Loss and accuracy over epochs for all models",
+            "Robustness evaluation: Gaussian noise (10% std) impact on model performance"
           ],
           "color": "warning",
           "link": "#"
@@ -91,11 +92,11 @@
           "title": "Extension Reports",
           "subtitle": "Additional Experiments/Improvements",
           "items": [
-            "Ablation study: effect of different augmentation techniques",
-            "Hyperparameter optimization: learning rate, batch size, optimizer",
-            "Alternative architectures: VGG, EfficientNet, MobileNet comparison",
-            "Ensemble methods: combining multiple CNN models",
-            "Computational efficiency: inference time and memory usage"
+            "Interpretability: Grad-CAM visualizations for ResNet50, attention maps for ViT-B/16",
+            "Robustness evaluation: Gaussian noise injection to test model robustness",
+            "Ensemble methods: Soft voting ensemble of ResNet50 and ViT-B/16",
+            "Efficiency analysis: Parameter count vs inference time vs accuracy trade-offs",
+            "Comparative analysis: ViT's superior performance despite higher computational cost"
           ],
           "color": "danger",
           "link": "#"
@@ -106,6 +107,7 @@
       "name": "Text Dataset",
       "type": "Text",
       "description": "IMDB sentiment analysis with RNN/LSTM",
+      "notebookLink": "#",
       "results": {
         "summary": "Text classification results on IMDB sentiment dataset:",
         "metrics": [
@@ -201,6 +203,7 @@
       "name": "Multimodal Dataset",
       "type": "Multimodal",
       "description": "Multimodal classification with image+text",
+      "notebookLink": "#",
       "results": {
         "summary": "Multimodal classification results on test dataset:",
         "metrics": [
@@ -297,6 +300,8 @@
     "title": "Technical Summary",
     "techniques": [
       "Convolutional Neural Networks (CNN) for image feature extraction",
+      "Vision Transformers (ViT) for global context modeling",
+      "Ensemble methods (soft voting) for combining CNN and ViT predictions",
       "Recurrent Neural Networks (RNN/LSTM) for sequential text data",
       "Multimodal fusion architectures for combining image and text features",
       "Data Augmentation (rotation, flipping, zoom for images; synonym replacement for text)",
@@ -305,14 +310,14 @@
       "Dropout Layers for regularization",
       "Attention mechanisms for cross-modal alignment"
     ],
-    "architecture": "Image Branch: CNN (ResNet-18)\nText Branch: LSTM with word embeddings\nMultimodal Fusion: Concatenation + Dense layers\nOutput: Softmax classification\n\nTraining: Adam optimizer, learning rate 0.001, batch size 32",
+    "architecture": "Image Branch: CNN (ResNet50) and Vision Transformer (ViT-B/16)\nText Branch: LSTM with word embeddings\nMultimodal Fusion: Concatenation + Dense layers\nOutput: Softmax classification\n\nTraining: Adam optimizer, learning rate 0.001, batch size 128",
     "trainingDetails": [
-      { "label": "Total Epochs", "value": "50" },
-      { "label": "Batch Size", "value": "32" },
+      { "label": "Total Epochs", "value": "5" },
+      { "label": "Batch Size", "value": "128" },
       { "label": "Learning Rate", "value": "0.001" },
       { "label": "Optimizer", "value": "Adam" },
       { "label": "Loss Function", "value": "Cross-Entropy" },
-      { "label": "Validation Split", "value": "20%" }
+      { "label": "Validation Split", "value": "Test set (10,000 images)" }
     ]
   },
   "deliverableLinks": {
