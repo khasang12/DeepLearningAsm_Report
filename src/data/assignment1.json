@@ -321,8 +321,8 @@
     ]
   },
   "deliverableLinks": {
-    "demoVideo": "#",
-    "presentationVideo": "#",
-    "sourceCode": "#"
+    "demoVideo": "https://youtu.be/8SdHzLHfhMc",
+    "presentationVideo": "https://youtu.be/-SqNPMu5KHo",
+    "sourceCode": "https://github.com/khasang12/DeepLearningAsm1_Classification"
   }
 }
