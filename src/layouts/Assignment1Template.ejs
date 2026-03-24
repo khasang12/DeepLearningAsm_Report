@@ -257,32 +257,80 @@
                             <p class="text-gray-700 dark:text-gray-300 mb-6"><%= datasets.text.description %></p>
                             <p class="text-lg text-gray-700 dark:text-gray-300 mb-8"><%= datasets.text.results.summary %></p>
                             
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                <!-- Performance Metrics -->
+                            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                                <!-- Model Metrics Visualization -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Model Performance Comparison</h4>
+                                    <div class="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <img src="assets/text_metrics.png" alt="BiLSTM vs BERT Performance Comparison" class="w-full h-auto rounded-lg">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">Accuracy, F1 (macro), Precision, and Recall comparison + Per-Class accuracy for all 14 DBpedia categories</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Performance Metrics Cards -->
                                 <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Performance Metrics</h4>
-                                    <div class="space-y-4">
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <% datasets.text.results.metrics.forEach(function(metric) { -%>
-                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 shadow-xs">
-                                            <span class="text-gray-700 dark:text-gray-300"><%= metric.label %></span>
-                                            <span class="text-lg font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
+                                        <div class="flex flex-col items-center py-4 px-3 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 shadow-xs">
+                                            <span class="text-sm text-gray-500 dark:text-gray-400 mb-2 text-center"><%= metric.label %></span>
+                                            <span class="text-2xl font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
                                                 <%= metric.value %>
                                             </span>
                                         </div>
                                         <% }) -%>
                                     </div>
                                 </div>
-                                
-                                <!-- Confusion Matrix -->
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
-                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrix</h4>
-                                    <div class="flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-                                        <i class="bi bi-diagram-3 text-5xl text-gray-400 dark:text-gray-500 mb-4"></i>
-                                        <p class="text-gray-700 dark:text-gray-300 text-center mb-2"><%= datasets.text.results.confusionMatrix.description %></p>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center"><%= datasets.text.results.confusionMatrix.note %></p>
-                                    </div>
-                                </div>
                             </div>
+
+                             <!-- Confusion Matrices -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrices</h4>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                     <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 shadow-sm">
+                                         <div class="flex flex-col items-center p-2 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                             <img src="assets/confusion_matrix_bilstm.png" alt="BiLSTM Confusion Matrix" class="w-full h-auto rounded-lg">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">BiLSTM (GloVe Frozen) — Strong diagonal dominance across all 14 classes</p>
+                                         </div>
+                                     </div>
+                                     <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 shadow-sm">
+                                         <div class="flex flex-col items-center p-2 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                             <img src="assets/confusion_matrix_bert.png" alt="BERT Confusion Matrix" class="w-full h-auto rounded-lg">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">BERT (Backbone Frozen) — WrittenWork most confused with Album/Film</p>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+                             <!-- Training Curves -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Training Curves</h4>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                     <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 shadow-sm">
+                                         <div class="flex flex-col items-center p-2 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                             <img src="assets/plot_curve_bilstm.png" alt="BiLSTM Training Curves" class="w-full h-auto rounded-lg">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">BiLSTM loss convergence and accuracy over 10 epochs</p>
+                                         </div>
+                                     </div>
+                                     <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 shadow-sm">
+                                         <div class="flex flex-col items-center p-2 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                             <img src="assets/plot_curve_bert.png" alt="BERT Training Curves" class="w-full h-auto rounded-lg">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">BERT loss convergence and accuracy over 10 epochs</p>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+                             <!-- t-SNE Embedding Visualization -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Embedding Visualization</h4>
+                                 <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+                                     <div class="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                         <img src="assets/text_t_SNE.png" alt="t-SNE of BERT CLS Embeddings" class="w-full h-auto rounded-lg max-w-3xl mx-auto">
+                                         <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">t-SNE of BERT [CLS] embeddings (pretrained, before fine-tuning) — Shows semantic clustering of 14 DBpedia categories</p>
+                                     </div>
+                                 </div>
+                             </div>
                             
                              <!-- Observations -->
                              <% if (datasets.text.results.observations && datasets.text.results.observations.length > 0) { -%>
@@ -391,32 +439,61 @@
                             <p class="text-gray-700 dark:text-gray-300 mb-6"><%= datasets.multimodal.description %></p>
                             <p class="text-lg text-gray-700 dark:text-gray-300 mb-8"><%= datasets.multimodal.results.summary %></p>
                             
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                <!-- Performance Metrics -->
+                            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                                <!-- Model Metrics Visualization -->
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Model Performance Comparison</h4>
+                                    <div class="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                        <img src="assets/multimodal_metrics.png" alt="CLIP Zero-Shot vs Few-Shot Performance Comparison" class="w-full h-auto rounded-lg">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">Accuracy, F1 (macro), Precision, and Recall comparison + Per-Class accuracy for all 10 COCO supercategories</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Performance Metrics Cards -->
                                 <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
                                     <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Performance Metrics</h4>
-                                    <div class="space-y-4">
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <% datasets.multimodal.results.metrics.forEach(function(metric) { -%>
-                                        <div class="flex justify-between items-center py-3 px-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 shadow-xs">
-                                            <span class="text-gray-700 dark:text-gray-300"><%= metric.label %></span>
-                                            <span class="text-lg font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
+                                        <div class="flex flex-col items-center py-4 px-3 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 shadow-xs">
+                                            <span class="text-sm text-gray-500 dark:text-gray-400 mb-2 text-center"><%= metric.label %></span>
+                                            <span class="text-2xl font-bold <%= metric.highlight ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-gray-100' %>">
                                                 <%= metric.value %>
                                             </span>
                                         </div>
                                         <% }) -%>
                                     </div>
                                 </div>
-                                
-                                <!-- Confusion Matrix -->
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
-                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrix</h4>
-                                    <div class="flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-                                        <i class="bi bi-diagram-3 text-5xl text-gray-400 dark:text-gray-500 mb-4"></i>
-                                        <p class="text-gray-700 dark:text-gray-300 text-center mb-2"><%= datasets.multimodal.results.confusionMatrix.description %></p>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center"><%= datasets.multimodal.results.confusionMatrix.note %></p>
-                                    </div>
-                                </div>
                             </div>
+
+                             <!-- Confusion Matrices -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Confusion Matrices</h4>
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                     <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 shadow-sm">
+                                         <div class="flex flex-col items-center p-2 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                             <img src="assets/confusion_matrix_CLIP_zeroshot.png" alt="Zero-Shot Confusion Matrix" class="w-full h-auto rounded-lg">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">Zero-Shot — Confuses many categories with 'outdoor' due to COCO scene bias</p>
+                                         </div>
+                                     </div>
+                                     <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 shadow-sm">
+                                         <div class="flex flex-col items-center p-2 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                             <img src="assets/confusion_matrix_CLIP_fewshot.png" alt="Few-Shot Confusion Matrix" class="w-full h-auto rounded-lg">
+                                             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-3">Few-Shot Prototype (16-shot) — Stronger diagonal, especially for animal, food, vehicle</p>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+                             <!-- Modality Gap & t-SNE Visualization -->
+                             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Modality Gap Visualization</h4>
+                                 <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+                                     <div class="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                                         <img src="assets/multimodal_t_SNE.png" alt="Modality Gap t-SNE" class="w-full h-auto rounded-lg">
+                                         <p class="text-sm text-gray-500 dark:text-gray-400 text-center mt-4">Left: Modality Gap (L2=0.829) — Image vs Text embeddings form separate clusters. Right: Embeddings colored by category (o=Image, x=Text)</p>
+                                     </div>
+                                 </div>
+                             </div>
                             
                              <!-- Observations -->
                              <% if (datasets.multimodal.results.observations && datasets.multimodal.results.observations.length > 0) { -%>
