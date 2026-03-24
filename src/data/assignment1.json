@@ -106,25 +106,26 @@
     "text": {
       "name": "Text Dataset",
       "type": "Text",
-      "description": "IMDB sentiment analysis with RNN/LSTM",
-      "notebookLink": "#",
+      "description": "DBpedia-14 text classification: BiLSTM (Frozen GloVe) vs BERT (Frozen Backbone)",
+      "notebookLink": "https://github.com/khasang12/DeepLearningAsm1_Classification/blob/main/src/notebooks/Report_Text.ipynb",
       "results": {
-        "summary": "Text classification results on IMDB sentiment dataset:",
+        "summary": "Text classification on DBpedia-14 (14 Wikipedia article categories, 14K train / 4.2K test): Comparing BiLSTM with frozen GloVe embeddings vs BERT with frozen backbone (linear probing)",
         "metrics": [
-          { "label": "Accuracy", "value": "89.2%", "highlight": true },
-          { "label": "Precision", "value": "88.7%" },
-          { "label": "Recall", "value": "89.5%" },
-          { "label": "F1-Score", "value": "89.1%" }
+          { "label": "BiLSTM Accuracy", "value": "96.7%", "highlight": true },
+          { "label": "BERT Accuracy", "value": "93.3%", "highlight": false },
+          { "label": "BiLSTM F1 (macro)", "value": "96.7%" },
+          { "label": "BERT F1 (macro)", "value": "93.2%" }
         ],
         "confusionMatrix": {
-          "description": "[Confusion matrix for sentiment analysis]",
-          "note": "2 classes: Positive vs Negative sentiment"
+          "description": "Confusion matrices for BiLSTM (GloVe Frozen) and BERT (Backbone Frozen) on DBpedia-14",
+          "note": "14 classes: Company, EducationalInstitution, Artist, Athlete, OfficeHolder, MeanOfTransportation, Building, NaturalPlace, Village, Animal, Plant, Album, Film, WrittenWork"
         },
         "observations": [
-          "LSTM model achieved 89.2% accuracy on IMDB test set",
-          "Model better at identifying positive reviews (91% precision)",
-          "Negative reviews had lower recall (87%) due to sarcasm/irony",
-          "Word embeddings improved performance by ~8%"
+          "BiLSTM (96.7%) slightly outperformed BERT (93.3%) — BiLSTM trains ~600K LSTM+FC params while BERT frozen trains only ~10K classifier params",
+          "Both models achieve >93% accuracy on DBpedia-14, showing the power of pretrained embeddings for topic classification",
+          "BERT backbone frozen = pure linear probing (99.9% params frozen), yet achieves 93.3% — strong representation quality",
+          "WrittenWork is BERT's weakest class (77%) — often confused with Album and Film due to similar creative work descriptions",
+          "Person-related categories (Artist, Athlete, OfficeHolder) show minor confusion in both models due to biographical text overlap"
         ]
       },
       "reports": [
@@ -133,10 +134,11 @@
           "title": "EDA Report",
           "subtitle": "Problem and Dataset Analysis",
           "items": [
-            "IMDB dataset analysis: 50,000 movie reviews with binary sentiment labels",
-            "Class distribution analysis: balanced (25,000 positive, 25,000 negative)",
-            "Text length analysis and vocabulary size statistics",
-            "Exploratory data visualization: word frequency, sentiment distribution"
+            "DBpedia-14 dataset: 14 Wikipedia article categories from HuggingFace (fancyzhx/dbpedia_14)",
+            "Subsampled: 1,000 train + 300 test per class (14,000 / 4,200 total), balanced across all classes",
+            "Text length distribution analysis: median word count and statistical summary",
+            "Class distribution plots confirming perfect balance across 14 categories",
+            "Word frequency analysis: top 20 most common words across all categories"
           ],
           "color": "primary",
           "link": "#"
@@ -144,13 +146,13 @@
         {
           "number": 2,
           "title": "Data Preparation Report",
-          "subtitle": "Dataset, DataLoader, and Augmentation Techniques",
+          "subtitle": "Preprocessing, Tokenization, and DataLoader Setup",
           "items": [
-            "Text preprocessing: tokenization, stopword removal, lowercasing",
-            "Sequence padding/truncation to fixed length (500 tokens)",
-            "Word embeddings: GloVe embeddings (300-dimensional)",
-            "Train/Validation/Test split: 40,000/5,000/5,000 reviews",
-            "DataLoader configuration with batch size 32 and shuffling"
+            "Text preprocessing: lowercase, remove URLs/HTML, remove special characters, normalize whitespace",
+            "BiLSTM tokenization: custom vocabulary (words with freq ≥ 2), pad/truncate to MAX_LEN=256",
+            "BERT tokenization: WordPiece tokenizer (bert-base-uncased), pad to MAX_LEN=256",
+            "GloVe embedding matrix: vocab words mapped to pretrained GloVe 6B 100d vectors",
+            "DataLoader: batch_size=64 (BiLSTM), batch_size=16 (BERT, higher memory usage)"
           ],
           "color": "success",
           "link": "#"
@@ -158,13 +160,13 @@
         {
           "number": 3,
           "title": "Methodology Report",
-          "subtitle": "Construction, Training, Evaluation, and Comparison of Models",
+          "subtitle": "BiLSTM (GloVe Frozen) vs BERT (Backbone Frozen) — Transfer Learning Comparison",
           "items": [
-            "RNN/LSTM architecture: embedding layer → LSTM → dense layers",
-            "Model 1: Simple LSTM with 128 hidden units",
-            "Model 2: Bidirectional LSTM with attention mechanism",
-            "Training: Adam optimizer (lr=0.001), cross-entropy loss, 20 epochs",
-            "Evaluation metrics: Accuracy, Precision, Recall, F1-Score"
+            "Model 1: BiLSTM — Embedding(GloVe 100d, FROZEN) → Dropout → BiLSTM(2 layers, hidden=128) → Mean Pooling → FC(256,128) → FC(128,14)",
+            "Model 2: BERT — bert-base-uncased (12 layers, ALL FROZEN) → Linear(768, 14) classifier head only",
+            "BiLSTM training: Adam (lr=1e-3), StepLR (step=5, γ=0.5), gradient clipping (max_norm=1.0), 10 epochs",
+            "BERT training: Adam (lr=1e-2, higher LR for fresh linear layer), StepLR, 10 epochs",
+            "Key principle: Transfer Learning — frozen pretrained layers + only task-specific heads trained"
           ],
           "color": "info",
           "link": "#"
@@ -172,13 +174,13 @@
         {
           "number": 4,
           "title": "Experimental Results",
-          "subtitle": "Tables, Charts, Analysis, and Discussion",
+          "subtitle": "Metrics, Confusion Matrices, Training Curves, and Comparison",
           "items": [
-            "Quantitative results comparison between LSTM and BiLSTM models",
-            "Confusion matrix visualization for sentiment classification",
-            "Error analysis: misclassification patterns in sarcastic/ironic reviews",
-            "Training curves: loss and accuracy over epochs",
-            "Discussion: impact of word embeddings and attention mechanisms"
+            "Side-by-side comparison: Accuracy, F1, Precision, Recall for both models",
+            "Confusion matrix heatmaps: BiLSTM (Blues) and BERT (Greens) on 14 classes",
+            "Training curves: loss convergence and train/test accuracy over 10 epochs",
+            "Per-class accuracy comparison: which categories each model excels at",
+            "Parameter analysis: BiLSTM ~600K trainable vs BERT ~10K trainable (but BERT has 109M frozen)"
           ],
           "color": "warning",
           "link": "#"
@@ -186,13 +188,12 @@
         {
           "number": 5,
           "title": "Extension Reports",
-          "subtitle": "Additional Experiments/Improvements",
+          "subtitle": "t-SNE Visualization, Text Augmentation, Attention Analysis, Error Analysis",
           "items": [
-            "Alternative models: BERT, Transformer-based classifiers",
-            "Hyperparameter optimization: hidden size, dropout, learning rate",
-            "Ensemble methods: combining LSTM and Transformer predictions",
-            "Transfer learning with pre-trained language models",
-            "Computational efficiency: inference time and memory usage"
+            "Extension 1: t-SNE/PCA visualization of BERT [CLS] embeddings showing semantic clustering before fine-tuning",
+            "Extension 2: Text data augmentation — synonym replacement (WordNet), random deletion, combined augmentation",
+            "Extension 3: BERT self-attention visualization — [CLS] attention weights and full attention heatmaps for 4 categories",
+            "Extension 4: Hard-negative error analysis — highest confidence errors, most confused class pairs (Artist↔Athlete, OfficeHolder↔Artist)"
           ],
           "color": "danger",
           "link": "#"
@@ -202,37 +203,39 @@
     "multimodal": {
       "name": "Multimodal Dataset",
       "type": "Multimodal",
-      "description": "Multimodal classification with image+text",
-      "notebookLink": "#",
+      "description": "COCO multimodal classification: CLIP Zero-Shot vs Few-Shot Prototype Network (16-shot)",
+      "notebookLink": "https://github.com/khasang12/DeepLearningAsm1_Classification/blob/main/src/notebooks/Report_Multimodal.ipynb",
       "results": {
-        "summary": "Multimodal classification results on test dataset:",
+        "summary": "Multimodal classification on COCO 2017 supercategories (~10 classes, ~6K samples): Zero-Shot (text prompts only) vs Few-Shot (16-shot Prototype Network with image+text), both using frozen CLIP (ViT-B/32)",
         "metrics": [
-          { "label": "Accuracy", "value": "94.8%", "highlight": true },
-          { "label": "Precision", "value": "94.2%" },
-          { "label": "Recall", "value": "94.6%" },
-          { "label": "F1-Score", "value": "94.4%" }
+          { "label": "Zero-Shot Accuracy", "value": "35.5%", "highlight": false },
+          { "label": "Few-Shot Accuracy", "value": "52.8%", "highlight": true },
+          { "label": "Zero-Shot F1 (macro)", "value": "35.5%" },
+          { "label": "Few-Shot F1 (macro)", "value": "51.9%" }
         ],
         "confusionMatrix": {
-          "description": "[Confusion matrix for multimodal classification]",
-          "note": "Combined image and text features"
+          "description": "Confusion matrices for Zero-Shot and Few-Shot (16-shot Prototype) classification on COCO supercategories",
+          "note": "10 COCO supercategories: animal, electronic, food, furniture, indoor, kitchen, outdoor, person, sports, vehicle"
         },
         "observations": [
-          "Multimodal fusion achieved 94.8% accuracy (best overall)",
-          "Late fusion outperformed early fusion by 3.2%",
-          "Attention mechanism improved cross-modal alignment",
-          "Text features complemented visual features for ambiguous cases"
+          "Few-Shot (52.8%) outperformed Zero-Shot (35.5%) by +17.3% — using actual image+text features instead of generic text prompts",
+          "Zero-Shot excels at 'food' (84% accuracy) but fails on 'person' (10%) — generic prompt 'a photo of a person' is too ambiguous for COCO",
+          "Few-Shot dramatically improves 'animal' (72%), 'vehicle' (70%), and 'outdoor' (60%) through real prototype examples",
+          "Neither approach trains any neural network layers — both use frozen CLIP (151M params, 0 trainable)",
+          "Modality gap (L2=0.829) confirmed: image and text embeddings occupy separate regions in CLIP's shared space"
         ]
       },
       "reports": [
         {
           "number": 1,
           "title": "EDA Report",
-          "subtitle": "Problem and Dataset Analysis",
+          "subtitle": "COCO Dataset and Supercategory Analysis",
           "items": [
-            "Multimodal dataset analysis: combined image-text pairs with labels",
-            "Dataset statistics: number of samples, modality alignment verification",
-            "Exploratory analysis: visual features vs textual features correlation",
-            "Challenge analysis: modality gap, missing modalities, noise"
+            "COCO 2017 Validation: 5,000 real-world images with object annotations and human-written captions",
+            "Labels from COCO supercategories (animal, vehicle, furniture, etc.) — top 10 with ≥100 samples selected",
+            "Class distribution visualization across supercategories",
+            "Caption length distribution analysis by category",
+            "Sample captions per category showing language diversity"
           ],
           "color": "primary",
           "link": "#"
@@ -240,13 +243,13 @@
         {
           "number": 2,
           "title": "Data Preparation Report",
-          "subtitle": "Dataset, DataLoader, and Augmentation Techniques",
+          "subtitle": "CLIP Processing, Data Split, and Feature Extraction",
           "items": [
-            "Image preprocessing: resize, normalization, augmentation (flip, rotation)",
-            "Text preprocessing: tokenization, embedding extraction",
-            "Modality alignment: ensuring image-text pair consistency",
-            "Train/Validation/Test split: maintaining modality balance",
-            "DataLoader configuration for heterogeneous multimodal batches"
+            "Text preprocessing: lowercase, remove special characters, normalize whitespace",
+            "Image loading: local val2017 images (224×224 for CLIP ViT-B/32)",
+            "Data split: 20% support set (for few-shot prototypes), 80% test set",
+            "Few-shot support set: K=16 examples per class sampled from support split",
+            "CLIP processor handles tokenization (max 77 tokens) and image normalization"
           ],
           "color": "success",
           "link": "#"
@@ -254,13 +257,13 @@
         {
           "number": 3,
           "title": "Methodology Report",
-          "subtitle": "Construction, Training, Evaluation, and Comparison of Fusion Methods",
+          "subtitle": "CLIP Architecture, Zero-Shot vs Few-Shot Prototype Network",
           "items": [
-            "Multimodal fusion architectures: early fusion, late fusion, hybrid fusion",
-            "Model 1: Early fusion with concatenated features",
-            "Model 2: Late fusion with separate encoders and attention mechanism",
-            "Training: Adam optimizer (lr=0.001), cross-entropy loss, 30 epochs",
-            "Evaluation metrics: Accuracy, Precision, Recall, F1-Score"
+            "CLIP (openai/clip-vit-base-patch32): dual-encoder (ViT image + Transformer text) trained on 400M image-text pairs, ALL FROZEN",
+            "Zero-Shot: encode class text prompts ('a photo of a [class]') → cosine similarity with image embeddings → softmax prediction",
+            "Few-Shot: extract multimodal features [image(512) || text(512)] = 1024-d → compute mean prototype per class → classify by nearest prototype",
+            "Key: Zero-Shot uses image-only features vs text prompts; Few-Shot uses multimodal concatenation vs class prototypes",
+            "No training, no optimizer, no loss function — pure frozen CLIP feature extraction + similarity computation"
           ],
           "color": "info",
           "link": "#"
@@ -268,13 +271,13 @@
         {
           "number": 4,
           "title": "Experimental Results",
-          "subtitle": "Tables, Charts, Analysis, and Discussion",
+          "subtitle": "Metrics, Confusion Matrices, Per-Class Accuracy Comparison",
           "items": [
-            "Quantitative results comparison between different fusion strategies",
-            "Confusion matrix visualization for multimodal classification",
-            "Ablation study: impact of individual modalities on performance",
-            "Training curves: loss and accuracy over epochs",
-            "Discussion: effectiveness of attention mechanisms for cross-modal alignment"
+            "Side-by-side comparison: Accuracy, F1, Precision, Recall for Zero-Shot vs Few-Shot",
+            "Confusion matrix heatmaps: Zero-Shot (Blues) and Few-Shot (Greens)",
+            "Per-class accuracy comparison showing which categories benefit from few-shot examples",
+            "Prototype similarity matrix visualizing inter-class relationships",
+            "Analysis: why Few-Shot outperforms Zero-Shot (real features vs generic text prompts)"
           ],
           "color": "warning",
           "link": "#"
@@ -282,13 +285,13 @@
         {
           "number": 5,
           "title": "Extension Reports",
-          "subtitle": "Additional Experiments/Improvements",
+          "subtitle": "Modality Gap, Patch Maps, Robustness, Error Analysis, Interactive Demo",
           "items": [
-            "Alternative fusion methods: transformer-based cross-attention",
-            "Hyperparameter optimization: fusion layer size, dropout rates",
-            "Modality dropout experiments for robustness testing",
-            "Transfer learning with pre-trained visual and language models",
-            "Computational efficiency: trade-offs between fusion complexity and accuracy"
+            "Extension 1: Modality Gap Visualization — t-SNE of image vs text embeddings showing separate clusters in shared CLIP space",
+            "Extension 2: Cross-Modal Patch-Level Similarity Maps — 7×7 heatmaps showing WHERE CLIP focuses for each text query",
+            "Extension 3: Robustness Testing — Gaussian noise (σ=50), random crop (50%), word shuffle corruptions on zero-shot accuracy",
+            "Extension 4: Hard-Negative Error Analysis — highest confidence errors with hypothesis categories (text confusion, visual ambiguity, weak signal)",
+            "Extension 5: Interactive Gradio Demo — upload image + optional text caption → CLIP predicts COCO supercategory with similarity scores"
           ],
           "color": "danger",
           "link": "#"
@@ -299,25 +302,28 @@
   "technicalSummary": {
     "title": "Technical Summary",
     "techniques": [
-      "Convolutional Neural Networks (CNN) for image feature extraction",
-      "Vision Transformers (ViT) for global context modeling",
-      "Ensemble methods (soft voting) for combining CNN and ViT predictions",
-      "Recurrent Neural Networks (RNN/LSTM) for sequential text data",
-      "Multimodal fusion architectures for combining image and text features",
-      "Data Augmentation (rotation, flipping, zoom for images; synonym replacement for text)",
-      "Transfer Learning using pre-trained models (ResNet, VGG, BERT, GPT)",
-      "Batch Normalization for faster convergence",
-      "Dropout Layers for regularization",
-      "Attention mechanisms for cross-modal alignment"
+      "Convolutional Neural Networks (ResNet50) and Vision Transformers (ViT-B/16) for image classification",
+      "Ensemble methods (soft voting) combining CNN and ViT predictions",
+      "BiLSTM with frozen GloVe 6B 100d embeddings for text classification (RNN-based)",
+      "BERT-base-uncased with frozen backbone for text classification (Transformer-based, linear probing)",
+      "CLIP (ViT-B/32) for multimodal zero-shot and few-shot classification",
+      "Prototype Networks (metric-based few-shot learning) with cosine similarity",
+      "Transfer Learning: frozen pretrained layers + task-specific heads",
+      "Data Augmentation: image (flip, jitter), text (synonym replacement, random deletion)",
+      "t-SNE / PCA for embedding visualization and modality gap analysis",
+      "Attention visualization (BERT self-attention, CLIP patch-level similarity)"
     ],
-    "architecture": "Image Branch: CNN (ResNet50) and Vision Transformer (ViT-B/16)\nText Branch: LSTM with word embeddings\nMultimodal Fusion: Concatenation + Dense layers\nOutput: Softmax classification\n\nTraining: Adam optimizer, learning rate 0.001, batch size 128",
+    "architecture": "Image: ResNet50 + ViT-B/16 → Ensemble (soft voting)\nText: BiLSTM(GloVe frozen) vs BERT(backbone frozen)\nMultimodal: CLIP Zero-Shot (text prompts) vs Few-Shot Prototype (16-shot, concat fusion)\n\nAll approaches use Transfer Learning with frozen pretrained weights",
     "trainingDetails": [
-      { "label": "Total Epochs", "value": "5" },
-      { "label": "Batch Size", "value": "128" },
-      { "label": "Learning Rate", "value": "0.001" },
-      { "label": "Optimizer", "value": "Adam" },
+      { "label": "Image Epochs", "value": "5" },
+      { "label": "Text Epochs", "value": "10" },
+      { "label": "Multimodal", "value": "No Training" },
+      { "label": "BiLSTM Config", "value": "Adam, LR=1e-3, Batch=64" },
+      { "label": "BERT Config", "value": "Adam, LR=1e-2, Batch=16" },
+      { "label": "CLIP Config", "value": "Frozen, 16-shot" },
+      { "label": "Scheduler", "value": "StepLR (γ=0.5)" },
       { "label": "Loss Function", "value": "Cross-Entropy" },
-      { "label": "Validation Split", "value": "Test set (10,000 images)" }
+      { "label": "Strategy", "value": "Transfer Learning" }
     ]
   },
   "deliverableLinks": {
