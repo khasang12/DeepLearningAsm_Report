@@ -128,6 +128,20 @@
           "Person-related categories (Artist, Athlete, OfficeHolder) show minor confusion in both models due to biographical text overlap"
         ]
       },
+      "trainingDetails": [
+        { "label": "Epochs", "value": "10" },
+        { "label": "BiLSTM Optimizer", "value": "Adam" },
+        { "label": "BiLSTM LR", "value": "1e-3" },
+        { "label": "BiLSTM Batch", "value": "64" },
+        { "label": "BERT Optimizer", "value": "Adam" },
+        { "label": "BERT LR", "value": "1e-2" },
+        { "label": "BERT Batch", "value": "16" },
+        { "label": "Scheduler", "value": "StepLR (γ=0.5)" },
+        { "label": "Loss", "value": "CrossEntropy" },
+        { "label": "Grad Clip", "value": "max_norm=1.0" },
+        { "label": "GloVe Dim", "value": "100d" },
+        { "label": "Strategy", "value": "Transfer Learning" }
+      ],
       "reports": [
         {
           "number": 1,
@@ -225,6 +239,18 @@
           "Modality gap (L2=0.829) confirmed: image and text embeddings occupy separate regions in CLIP's shared space"
         ]
       },
+      "trainingDetails": [
+        { "label": "Training", "value": "None" },
+        { "label": "CLIP Model", "value": "ViT-B/32" },
+        { "label": "Params Trained", "value": "0 (Frozen)" },
+        { "label": "Total Params", "value": "151M" },
+        { "label": "Zero-Shot", "value": "Text Prompts" },
+        { "label": "Few-Shot K", "value": "16-shot" },
+        { "label": "Feature Dim", "value": "1024 (concat)" },
+        { "label": "Similarity", "value": "Cosine" },
+        { "label": "COCO Classes", "value": "10" },
+        { "label": "Strategy", "value": "Transfer Learning" }
+      ],
       "reports": [
         {
           "number": 1,
@@ -316,12 +342,7 @@
     "architecture": "Image: ResNet50 + ViT-B/16 → Ensemble (soft voting)\nText: BiLSTM(GloVe frozen) vs BERT(backbone frozen)\nMultimodal: CLIP Zero-Shot (text prompts) vs Few-Shot Prototype (16-shot, concat fusion)\n\nAll approaches use Transfer Learning with frozen pretrained weights",
     "trainingDetails": [
       { "label": "Image Epochs", "value": "5" },
-      { "label": "Text Epochs", "value": "10" },
-      { "label": "Multimodal", "value": "No Training" },
-      { "label": "BiLSTM Config", "value": "Adam, LR=1e-3, Batch=64" },
-      { "label": "BERT Config", "value": "Adam, LR=1e-2, Batch=16" },
-      { "label": "CLIP Config", "value": "Frozen, 16-shot" },
-      { "label": "Scheduler", "value": "StepLR (γ=0.5)" },
+      { "label": "Optimizer", "value": "Adam" },
       { "label": "Loss Function", "value": "Cross-Entropy" },
       { "label": "Strategy", "value": "Transfer Learning" }
     ]
