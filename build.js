@@ -74,7 +74,16 @@ const pages = [
       page: 'assignment2',
       assignment: assignment2Data.assignment,
       reports: assignment2Data.reports,
-      methodologyComparison: assignment2Data.methodologyComparison
+      methodologyComparison: assignment2Data.methodologyComparison,
+      dataset: assignment2Data.dataset,
+      architectures: assignment2Data.architectures,
+      augmentations: assignment2Data.augmentations,
+      lossFunctions: assignment2Data.lossFunctions,
+      trainingTechniques: assignment2Data.trainingTechniques,
+      interpretability: assignment2Data.interpretability,
+      deliverables: assignment2Data.deliverables,
+      deliverableLinks: assignment2Data.deliverableLinks,
+      hybridLoss: assignment2Data.hybridLoss
     }
   }
 ];

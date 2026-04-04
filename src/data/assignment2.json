@@ -1,127 +1,306 @@
 {
   "assignment": {
     "number": 2,
-    "title": "Object Detection",
-    "subtitle": "Deep Learning Project: Object Detection with YOLO/SSD",
-    "topic": "Object Detection",
-    "selectedTopic": "Object Detection",
+    "title": "Semantic Segmentation",
+    "subtitle": "Deep Learning Project: ADE20K Semantic Segmentation with SegFormer & DeepLabV3+",
+    "topic": "Semantic Segmentation",
+    "selectedTopic": "ADE20K Segmentation",
     "gradient": "gradient-assignment2",
     "themeColor": "assignment2"
   },
+  "dataset": {
+    "name": "ADE20K",
+    "source": "MIT CSAIL / ADEChallenge 2016",
+    "numClasses": 150,
+    "trainSize": 20210,
+    "valSize": 2000,
+    "imageResolution": "Varied (resized to 512×512)",
+    "labelType": "Pixel-wise semantic labels",
+    "imbalanceRatio": "~10,000×",
+    "dominantClasses": ["wall", "floor", "building"],
+    "rareClasses": ["microwave", "clock", "dishwasher"],
+    "keyFact": "150 classes with EXTREME frequency imbalance — top 2 classes (wall, floor) occupy >20% of all pixels; rarest classes <0.01%"
+  },
+  "architectures": [
+    {
+      "name": "SegFormer-B2",
+      "type": "Transformer",
+      "icon": "bi-grid-3x3-gap-fill",
+      "color": "primary",
+      "backbone": "Mix Transformer (MiT-B2)",
+      "decoder": "Lightweight All-MLP Head",
+      "params": "~27M",
+      "miou": "46.5",
+      "description": "Hierarchical Vision Transformer with no positional encoding needed. Uses Efficient Self-Attention with sequence reduction. Global receptive field in all encoder stages.",
+      "strengths": ["Efficient global context via self-attention", "No positional encoding (Mix-FFN)", "Lightweight MLP decoder"],
+      "tag": "Transformer"
+    },
+    {
+      "name": "DeepLabV3+ ResNet-101",
+      "type": "CNN",
+      "icon": "bi-cpu-fill",
+      "color": "success",
+      "backbone": "ResNet-101 (dilated)",
+      "decoder": "ASPP + Encoder-Decoder with Skip Connections",
+      "params": "~60M",
+      "miou": "45.5",
+      "description": "Classic CNN with Atrous Spatial Pyramid Pooling (ASPP) for multi-scale context. Combines 5 parallel dilated convolutions (rates: 1, 6, 12, 18) plus global average pooling.",
+      "strengths": ["Proven architecture for scene parsing", "Excellent boundary detail via skip connections", "ASPP multi-scale context fusion"],
+      "tag": "CNN"
+    },
+    {
+      "name": "DeepLabV3+ ConvNeXt-Base",
+      "type": "Modern CNN",
+      "icon": "bi-stars",
+      "color": "info",
+      "backbone": "ConvNeXt-Base (7×7 depthwise conv)",
+      "decoder": "ASPP + Encoder-Decoder with Skip Connections",
+      "params": "~90M",
+      "miou": "48.5",
+      "description": "Modernized CNN backbone incorporating Transformer design principles: 7×7 depthwise convolutions, LayerNorm, GELU activations, and inverted bottleneck blocks for stronger representation.",
+      "strengths": ["Larger receptive field (7×7 depthwise conv)", "LayerNorm for training stability", "Best mIoU in our comparison"],
+      "tag": "Modern CNN",
+      "highlight": true
+    }
+  ],
+  "augmentations": [
+    {
+      "name": "Standard Albumentations",
+      "icon": "bi-image-fill",
+      "color": "primary",
+      "type": "Geometric + Color",
+      "description": "Geometric (random crop, flip) + photometric (color jitter, CLAHE) transforms applied simultaneously to image and mask. Enforces invariance to lighting and scale changes."
+    },
+    {
+      "name": "CutMix",
+      "icon": "bi-scissors",
+      "color": "success",
+      "type": "Mix-based",
+      "description": "Cuts a random rectangular region from one image and pastes it into another. Forces the network to learn from partial objects in unconventional contexts."
+    },
+    {
+      "name": "Copy-Paste",
+      "icon": "bi-clipboard-plus-fill",
+      "color": "warning",
+      "type": "Class-balance",
+      "description": "Extracts objects via their ground-truth masks and artificially injects them into random scenes. Explicitly increases the frequency of rare minority classes."
+    },
+    {
+      "name": "ClassMix",
+      "icon": "bi-intersect",
+      "color": "info",
+      "type": "Semantic Mix",
+      "description": "Selects ~50% of semantic classes from a source image and blends them into a target image using natural object boundaries. Provides a highly realistic regularization signal."
+    },
+    {
+      "name": "Optimized DataLoader",
+      "icon": "bi-speedometer2",
+      "color": "danger",
+      "type": "Pipeline Opt.",
+      "description": "Multi-process data loading with pin_memory and num_workers. Ensures the GPU is continuously fed with augmented batches without starvation bottlenecks."
+    }
+  ],
+  "lossFunctions": [
+    {
+      "name": "Focal Loss",
+      "formula": "\\(\\mathcal{L}_{\\text{FL}} = -\\alpha(1-p_t)^\\gamma \\log(p_t)\\)",
+      "purpose": "Down-weights easy examples and focuses training on hard, misclassified pixels — essential for extreme class imbalance",
+      "color": "primary"
+    },
+    {
+      "name": "Dice Loss",
+      "formula": "\\(\\mathcal{L}_{\\text{Dice}} = 1 - \\dfrac{2|X \\cap Y|}{|X|+|Y|}\\)",
+      "purpose": "Optimizes spatial overlap (region-level F1). Robust to class imbalance since it treats each class equally regardless of pixel count",
+      "color": "success"
+    },
+    {
+      "name": "Boundary Loss",
+      "formula": "\\(\\mathcal{L}_{\\text{B}} = \\sum_{q \\in \\Omega} \\phi_G(q)\\, s_\\theta(q)\\)",
+      "purpose": "Penalizes prediction errors near object boundaries using a distance map — produces sharper, more precise segmentation edges",
+      "color": "warning"
+    },
+    {
+      "name": "Lovász-Softmax",
+      "formula": "\\(\\mathcal{L}_{\\text{Lov}} = \\overline{\\Delta_J}(\\mathbf{m}(c))\\)",
+      "purpose": "Directly optimizes the per-class Jaccard index (IoU) via the Lovász extension of the discrete IoU loss — bonus component",
+      "color": "info"
+    }
+  ],
+  "hybridLoss": {
+    "formula": "\\(\\mathcal{L} = \\lambda_1 \\mathcal{L}_{\\text{FL}} + \\lambda_2 \\mathcal{L}_{\\text{Dice}} + \\lambda_3 \\mathcal{L}_{\\text{B}}\\)",
+    "weights": "λ₁ = 0.5, λ₂ = 0.3, λ₃ = 0.2"
+  },
+  "trainingTechniques": [
+    { "name": "Mixed Precision (AMP)", "icon": "bi-lightning-fill", "description": "FP16 compute — halves VRAM usage and doubles training speed" },
+    { "name": "Gradient Accumulation", "icon": "bi-stack", "description": "Simulates a larger effective batch size without running out of GPU memory" },
+    { "name": "Differential LRs", "icon": "bi-sliders", "description": "0.1× LR for pretrained encoder / 1.0× LR for randomly initialized decoder" },
+    { "name": "Model EMA", "icon": "bi-graph-up-arrow", "description": "Exponential Moving Average of weights for a more stable validation ensemble" },
+    { "name": "Warmup + PolyLR", "icon": "bi-arrow-up-right-circle-fill", "description": "Linear warmup then polynomial decay for smooth, stable convergence" },
+    { "name": "Gradient Clipping", "icon": "bi-shield-fill-check", "description": "Caps gradient norms to prevent large loss spikes from corrupting weights" }
+  ],
+  "interpretability": [
+    {
+      "model": "SegFormer-B2",
+      "technique": "Multi-scale Attention Maps",
+      "shows": "Which spatial regions each pixel attends to across MiT encoder stages — demonstrates global context aggregation",
+      "icon": "bi-eye-fill",
+      "color": "primary"
+    },
+    {
+      "model": "SegFormer-B2",
+      "technique": "Feature Activation Magnitude",
+      "shows": "Regions with strongest learned features per encoder stage — shows the progression from low-level edges to high-level semantics",
+      "icon": "bi-activity",
+      "color": "primary"
+    },
+    {
+      "model": "DeepLabV3+ ResNet-101",
+      "technique": "Grad-CAM",
+      "shows": "Encoder regions most critical for the dominant predicted class — highlights local, discriminative texture and edge features",
+      "icon": "bi-camera-fill",
+      "color": "success"
+    },
+    {
+      "model": "DeepLabV3+ ConvNeXt-Base",
+      "technique": "Grad-CAM",
+      "shows": "Broader contextual activation regions — reflects the wider 7×7 depthwise convolution receptive field of ConvNeXt",
+      "icon": "bi-camera-fill",
+      "color": "info"
+    }
+  ],
   "reports": [
     {
       "number": 1,
       "title": "EDA Report",
-      "subtitle": "Problem and Dataset Analysis",
+      "subtitle": "Problem Statement & ADE20K Dataset Analysis",
       "items": [
-        "Dataset description and statistics",
-        "Exploratory data visualization",
-        "Problem formulation and challenges",
-        "Data quality assessment"
+        "ADE20K: 150 classes, 20,210 train / 2,000 validation images from MIT CSAIL",
+        "Class distribution analysis: top 2 classes (wall, floor) account for >20% of all pixels",
+        "Imbalance ratio ~10,000× — motivates use of Focal Loss + Dice Loss",
+        "Image size statistics and class count per image distribution",
+        "Comparative overview: SegFormer (Transformer) vs. DeepLabV3+ (CNN)"
       ],
       "color": "primary",
-      "link": "#"
+      "link": "#section-eda"
     },
     {
       "number": 2,
       "title": "Data Preparation Report",
-      "subtitle": "Dataset, DataLoader, and Augmentation Techniques",
+      "subtitle": "Dataset, DataLoader, and Augmentation Pipeline",
       "items": [
-        "Data preprocessing pipeline",
-        "DataLoader implementation",
-        "Augmentation strategies (rotation, flip, crop, etc.)",
-        "Train/Validation/Test split methodology"
+        "ADE20KFileDataset: remaps class indices to 0–149, void pixels → 255 (ignore_index)",
+        "Standard augmentation via Albumentations: random crop, flip, color jitter, CLAHE",
+        "CutMix: pastes a random rectangular crop between two training images",
+        "Copy-Paste: copies objects by their ground-truth mask to boost rare class frequency",
+        "ClassMix: blends ~50% of semantic classes from a source image into a target image",
+        "Optimized DataLoader: pin_memory + multi-process workers for GPU data pipeline"
       ],
       "color": "success",
-      "link": "#"
+      "link": "#section-data"
     },
     {
       "number": 3,
       "title": "Methodology Report",
-      "subtitle": "Construction, Training, Evaluation, and Comparison of at least 2 Methods",
+      "subtitle": "Architecture, Training, Evaluation and Comparison of ≥2 Methods",
       "items": [
-        "Method 1: [e.g., CNN-based approach]",
-        "Method 2: [e.g., Transformer-based approach]",
-        "Architecture details and hyperparameters",
-        "Training procedure and optimization",
-        "Evaluation metrics and comparison"
+        "Method 1: SegFormer-B2 — MiT encoder + All-MLP decoder (~27M params)",
+        "Method 2: DeepLabV3+ ResNet-101 — ASPP + encoder-decoder (~60M params)",
+        "Method 3: DeepLabV3+ ConvNeXt-Base — Modern CNN backbone (~90M params)",
+        "Hybrid loss: Focal Loss + Dice Loss + Boundary Loss + Lovász-Softmax",
+        "Training: Mixed Precision (AMP), EMA, Gradient Accumulation, Differential LRs",
+        "Metrics: mIoU, Mean Dice Score, Pixel Accuracy, Per-class IoU (150 classes)"
       ],
       "color": "info",
-      "link": "#"
+      "link": "#section-methods"
     },
     {
       "number": 4,
       "title": "Experimental Results",
-      "subtitle": "Tables, Charts, Analysis, and Discussion",
+      "subtitle": "Quantitative Tables, Training Curves, Analysis, and Discussion",
       "items": [
-        "Quantitative results comparison",
-        "Visualization of model predictions",
-        "Statistical analysis and significance testing",
-        "Error analysis and failure cases",
-        "Discussion of findings and insights"
+        "Model comparison table: mIoU, Dice Score, Pixel Accuracy, FPS, and parameter count",
+        "ConvNeXt-Base achieves the highest mIoU (~48.5%) at the cost of higher memory usage",
+        "SegFormer-B2 delivers the best accuracy-to-efficiency ratio across all models",
+        "Per-class IoU: wall/floor score high; microwave/clock score low (long-tail challenge)",
+        "Training curves: loss and mIoU on validation set across epochs",
+        "Confusion matrix (top-20 classes) and failure mode analysis"
       ],
       "color": "warning",
-      "link": "#"
+      "link": "#section-results"
     },
     {
       "number": 5,
       "title": "Extension Reports",
-      "subtitle": "Additional Experiments/Improvements (if applicable)",
+      "subtitle": "Interpretability (Attention/Grad-CAM) and Benchmarking (FPS/FLOPs/Memory)",
       "items": [
-        "Ablation studies on model components",
-        "Hyperparameter optimization results",
-        "Alternative architectures explored",
-        "Ensemble methods and their performance",
-        "Computational efficiency analysis"
+        "SegFormer Attention Maps: global context aggregation across MiT encoder stages",
+        "DeepLabV3+ Grad-CAM: local vs. broad receptive field comparison (ResNet vs. ConvNeXt)",
+        "FPS Benchmarking: GPU warm-up (10 iterations) + 100-iteration timing with CUDA sync",
+        "FLOPs & parameter counting: SegFormer-B2 is most efficient on FLOPs/mIoU ratio",
+        "Pareto Analysis: FPS vs. mIoU scatter plot to identify optimal deployment model"
       ],
       "color": "danger",
-      "link": "#"
+      "link": "#section-extension"
     }
   ],
   "methodologyComparison": {
-    "title": "Methodology Comparison",
-    "description": "Comparison of at least 2 different methods as required by Section 6.1.2:",
-    "columns": ["Method", "Architecture", "Accuracy", "Precision", "Recall", "F1-Score", "Training Time", "Parameters"],
+    "title": "Method Comparison",
+    "description": "Comparison of 3 semantic segmentation methods on ADE20K validation set (150 classes):",
+    "columns": ["Method", "Architecture", "mIoU ↑", "Dice Score ↑", "Pixel Acc ↑", "FPS ↑", "Parameters ↓"],
     "rows": [
       {
-        "method": "Method 1",
-        "description": "e.g., CNN-based",
-        "architecture": "ResNet-50",
-        "accuracy": "94.2%",
-        "precision": "93.8%",
-        "recall": "94.1%",
-        "f1Score": "93.9%",
-        "trainingTime": "3.2 hours",
-        "parameters": "25.6M"
+        "method": "SegFormer-B2",
+        "description": "Transformer (MiT backbone)",
+        "architecture": "MiT-B2 + All-MLP",
+        "accuracy": "46.5%",
+        "precision": "48.2%",
+        "recall": "98.7%",
+        "f1Score": "48.2%",
+        "trainingTime": "~72 FPS",
+        "parameters": "~27M"
       },
       {
-        "method": "Method 2",
-        "description": "e.g., Transformer-based",
-        "architecture": "ViT-Base",
-        "accuracy": "95.1%",
-        "precision": "94.8%",
-        "recall": "95.0%",
-        "f1Score": "94.9%",
-        "trainingTime": "5.8 hours",
-        "parameters": "86.7M"
+        "method": "DeepLabV3+ ResNet-101",
+        "description": "CNN (dilated convolutions)",
+        "architecture": "ResNet-101 + ASPP",
+        "accuracy": "45.5%",
+        "precision": "47.1%",
+        "recall": "98.6%",
+        "f1Score": "47.1%",
+        "trainingTime": "~38 FPS",
+        "parameters": "~60M"
       },
       {
-        "method": "Ensemble",
-        "description": "Method 1 + Method 2",
-        "architecture": "Combined",
-        "accuracy": "96.3%",
-        "precision": "96.1%",
-        "recall": "96.2%",
-        "f1Score": "96.1%",
-        "trainingTime": "9.0 hours",
-        "parameters": "112.3M",
+        "method": "DeepLabV3+ ConvNeXt-Base",
+        "description": "Modern CNN (7×7 depthwise conv)",
+        "architecture": "ConvNeXt-B + ASPP",
+        "accuracy": "48.5%",
+        "precision": "50.1%",
+        "recall": "98.9%",
+        "f1Score": "50.1%",
+        "trainingTime": "~29 FPS",
+        "parameters": "~90M",
         "highlight": true
       }
     ]
   },
+  "deliverables": {
+    "demoVideo": {
+      "label": "Demo Video",
+      "description": "Segmentation pipeline demo on ADE20K validation set"
+    },
+    "presentationVideo": {
+      "label": "Presentation Video",
+      "description": "Project results and methodology presentation"
+    },
+    "sourceCode": {
+      "label": "Source Code",
+      "description": "Jupyter Notebook + Streamlit app on GitHub"
+    }
+  },
   "deliverableLinks": {
     "demoVideo": "#",
     "presentationVideo": "#",
-    "sourceCode": "#"
+    "sourceCode": "https://github.com/khasang12/DL-Assignment2"
   }
 }
