@@ -187,11 +187,10 @@
                 </div>
 
                 <!-- Architecture Theory Table -->
-                <!-- EDA Image Placeholder -->
-                <div class="mb-8 border-2 border-dashed border-gray-300 rounded-2xl p-6 bg-gray-50 text-center">
-                    <i class="bi bi-bar-chart-fill text-4xl text-gray-300 mb-3 block"></i>
-                    <p class="text-gray-400 font-semibold text-sm">[ Figure 1 — Class Frequency Distribution (ADE20K) ]</p>
-                    <p class="text-gray-300 text-xs mt-1">Placeholder — insert class distribution bar chart here</p>
+                <!-- EDA Image -->
+                <div class="mb-8 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                    <img src="assets/asm2_class_frequency_distribution.png" alt="Class Frequency Distribution (ADE20K)" class="w-full h-auto" loading="lazy">
+                    <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 1 — Class Frequency Distribution (ADE20K)</p>
                 </div>
 
                 <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
@@ -213,8 +212,8 @@
                             <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium text-gray-700">Positional Encoding</td><td class="px-5 py-3 text-gray-600">Not needed — Mix-FFN with 3×3 conv</td><td class="px-5 py-3 text-gray-600">N/A (implicit in convolutions)</td></tr>
                             <tr class="hover:bg-gray-50 bg-gray-50"><td class="px-5 py-3 font-medium text-gray-700">Multi-scale</td><td class="px-5 py-3 text-gray-600">4-stage hierarchical feature maps</td><td class="px-5 py-3 text-gray-600">Atrous Spatial Pyramid Pooling (ASPP)</td></tr>
                             <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium text-gray-700">Receptive Field</td><td class="px-5 py-3 text-gray-600">Global (full-image self-attention)</td><td class="px-5 py-3 text-gray-600">Local → Global (dilated convolutions)</td></tr>
-                            <tr class="hover:bg-gray-50 bg-gray-50"><td class="px-5 py-3 font-medium text-gray-700">Parameters</td><td class="px-5 py-3 font-semibold text-green-600">~27M (B2) — Lightest</td><td class="px-5 py-3 text-gray-600">~60M (ResNet-101), ~90M (ConvNeXt-B)</td></tr>
-                            <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium text-gray-700">ADE20K mIoU</td><td class="px-5 py-3 text-gray-600">~46.5 (B2)</td><td class="px-5 py-3 text-gray-600">~45.5 (ResNet-101), ~48.5 (ConvNeXt-B)</td></tr>
+                            <tr class="hover:bg-gray-50 bg-gray-50"><td class="px-5 py-3 font-medium text-gray-700">Parameters</td><td class="px-5 py-3 font-semibold text-green-600">27.5M (B2) — Lightest</td><td class="px-5 py-3 text-gray-600">45.7M (ResNet-101), 89.4M (ConvNeXt-B)</td></tr>
+                            <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium text-gray-700">ADE20K mIoU</td><td class="px-5 py-3 text-gray-600">46.27 (B2)</td><td class="px-5 py-3 text-gray-600">39.20 (ResNet-101), 47.94 (ConvNeXt-B)</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -283,11 +282,10 @@
                     </div>
                 </div>
 
-                <!-- Augmentation Visual Placeholder -->
-                <div class="mt-8 border-2 border-dashed border-gray-300 rounded-2xl p-6 bg-gray-50 text-center">
-                    <i class="bi bi-images text-4xl text-gray-300 mb-3 block"></i>
-                    <p class="text-gray-400 font-semibold text-sm">[ Figure 2 — Augmented Sample Visualizations ]</p>
-                    <p class="text-gray-300 text-xs mt-1">Placeholder — insert grid of original vs. augmented image pairs (CutMix, Copy-Paste, ClassMix)</p>
+                <!-- Augmentation Visual -->
+                <div class="mt-8 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                    <img src="assets/asm2_augmented_training_samples.png" alt="Augmented Sample Visualizations" class="w-full h-auto" loading="lazy">
+                    <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 2 — Augmented Sample Visualizations</p>
                 </div>
             </section>
 
@@ -364,11 +362,16 @@
                     <p class="text-xs text-purple-500 mt-2"><%= hybridLoss.weights %></p>
                 </div>
 
-                <!-- Architecture diagram placeholder -->
-                <div class="mb-8 border-2 border-dashed border-gray-300 rounded-2xl p-6 bg-gray-50 text-center">
-                    <i class="bi bi-diagram-2 text-4xl text-gray-300 mb-3 block"></i>
-                    <p class="text-gray-400 font-semibold text-sm">[ Figure 3 — Model Architecture Diagrams ]</p>
-                    <p class="text-gray-300 text-xs mt-1">Placeholder — insert SegFormer MiT encoder + All-MLP decoder diagram and DeepLabV3+ ASPP diagram</p>
+                <!-- Architecture Diagrams -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                        <img src="assets/asm2_segformer_architecture.png" alt="SegFormer Architecture" class="w-full h-auto" loading="lazy">
+                        <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 3a — SegFormer Architecture</p>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                        <img src="assets/asm2_deeplabv3+_architecture.png" alt="DeepLabV3+ Architecture" class="w-full h-auto" loading="lazy">
+                        <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 3b — DeepLabV3+ Architecture</p>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-0 hidden">
@@ -457,6 +460,9 @@
                                         <%= row.architecture %>
                                     </span>
                                 </td>
+                                <td class="px-5 py-4 whitespace-nowrap">
+                                    <span class="inline-block text-xs font-medium bg-orange-50 text-orange-700 px-2 py-0.5 rounded-md"><%= row.parameters %></span>
+                                </td>
                                 <td class="px-5 py-4">
                                     <div class="flex items-center gap-2">
                                         <span class="font-bold text-base <%= row.highlight ? 'text-yellow-600' : 'text-gray-900' %> w-14 flex-shrink-0">
@@ -464,18 +470,16 @@
                                         </span>
                                         <div class="flex-1 min-w-16">
                                             <div class="w-full bg-gray-100 rounded-full h-1.5">
-                                                <div class="<%= row.highlight ? 'bg-yellow-400' : 'bg-blue-400' %> h-1.5 rounded-full" style="width:<%= parseFloat(row.accuracy) %>%"></div>
+                                                <div class="<%= row.highlight ? 'bg-yellow-400' : 'bg-blue-400' %> h-1.5 rounded-full" style="width:<%= parseFloat(row.accuracy) * 100 %>%"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-700"><%= row.precision %></td>
                                 <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-700"><%= row.recall %></td>
+                                <td class="px-5 py-4 whitespace-nowrap text-sm text-gray-700"><%= row.valLoss %></td>
                                 <td class="px-5 py-4 whitespace-nowrap">
-                                    <span class="inline-block text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md"><%= row.trainingTime %></span>
-                                </td>
-                                <td class="px-5 py-4 whitespace-nowrap">
-                                    <span class="inline-block text-xs font-medium bg-orange-50 text-orange-700 px-2 py-0.5 rounded-md"><%= row.parameters %></span>
+                                    <span class="inline-block text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md"><%= row.validClasses %></span>
                                 </td>
                             </tr>
                             <% }) -%>
@@ -483,11 +487,10 @@
                     </table>
                 </div>
 
-                <!-- Training Curve Placeholder -->
-                <div class="mb-8 border-2 border-dashed border-gray-300 rounded-2xl p-6 bg-gray-50 text-center">
-                    <i class="bi bi-graph-up text-4xl text-gray-300 mb-3 block"></i>
-                    <p class="text-gray-400 font-semibold text-sm">[ Figure 4 — Training Curves (Loss & mIoU vs. Epoch) ]</p>
-                    <p class="text-gray-300 text-xs mt-1">Placeholder — insert training/validation loss and mIoU curves for all 3 models</p>
+                <!-- Model Prediction Comparison -->
+                <div class="mb-8 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                    <img src="assets/asm2_model_prediction_comparison.png" alt="Model Prediction Comparison" class="w-full h-auto" loading="lazy">
+                    <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 4 — Model Prediction Comparison</p>
                 </div>
 
                 <!-- Analysis & Discussion -->
@@ -500,13 +503,13 @@
                         <h4 class="font-bold text-green-800 text-sm mb-2 flex items-center">
                             <i class="bi bi-trophy-fill text-green-600 mr-2"></i>ConvNeXt-Base — Highest mIoU
                         </h4>
-                        <p class="text-green-700 text-xs leading-relaxed">DeepLabV3+ with ConvNeXt-Base backbone achieves the highest mIoU (~48.5%) due to 7×7 depthwise convolutions providing a wider receptive field and LayerNorm offering more stable training than BatchNorm on dense scene parsing.</p>
+                        <p class="text-green-700 text-xs leading-relaxed">DeepLabV3+ with ConvNeXt-Base backbone achieves the highest mIoU (47.94%) due to 7×7 depthwise convolutions providing a wider receptive field and LayerNorm offering more stable training than BatchNorm on dense scene parsing.</p>
                     </div>
                     <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
                         <h4 class="font-bold text-blue-800 text-sm mb-2 flex items-center">
                             <i class="bi bi-lightning-fill text-blue-600 mr-2"></i>SegFormer-B2 — Best Efficiency
                         </h4>
-                        <p class="text-blue-700 text-xs leading-relaxed">SegFormer-B2 achieves competitive mIoU (46.5%) with only ~27M parameters at ~72 FPS — the best FLOPs/mIoU ratio. Global self-attention captures long-range dependencies that ASPP cannot model with fixed dilation rates.</p>
+                        <p class="text-blue-700 text-xs leading-relaxed">SegFormer-B2 achieves competitive mIoU (46.27%) with only 27.5M parameters — the best FLOPs/mIoU ratio. Global self-attention captures long-range dependencies that ASPP cannot model with fixed dilation rates.</p>
                     </div>
                     <div class="bg-orange-50 rounded-xl p-4 border border-orange-200">
                         <h4 class="font-bold text-orange-800 text-sm mb-2 flex items-center">
@@ -522,11 +525,16 @@
                     </div>
                 </div>
 
-                <!-- Per-class IoU placeholder -->
-                <div class="mt-8 border-2 border-dashed border-gray-300 rounded-2xl p-6 bg-gray-50 text-center">
-                    <i class="bi bi-bar-chart-steps text-4xl text-gray-300 mb-3 block"></i>
-                    <p class="text-gray-400 font-semibold text-sm">[ Figure 5 — Per-class IoU (Top 20 & Bottom 20 Classes) ]</p>
-                    <p class="text-gray-300 text-xs mt-1">Placeholder — insert horizontal bar chart of per-class IoU for all 3 models</p>
+                <!-- Per-class IoU -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                        <img src="assets/asm2_top_20.png" alt="Top 20 Classes by IoU" class="w-full h-auto" loading="lazy">
+                        <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 5a — Top 20 Classes by IoU</p>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                        <img src="assets/asm2_bottom_20.png" alt="Bottom 20 Classes by IoU" class="w-full h-auto" loading="lazy">
+                        <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 5b — Bottom 20 Classes by IoU</p>
+                    </div>
                 </div>
             </section>
 
@@ -540,11 +548,6 @@
                 </div>
                 <p class="text-gray-500 text-sm mb-8 ml-1">Model Interpretability (Attention Maps / Grad-CAM) and Efficiency Benchmarking (FPS / FLOPs / Memory)</p>
 
-                <!-- Interpretability -->
-                <h3 class="text-base font-bold text-gray-800 mb-5 flex items-center">
-                    <i class="bi bi-eye-fill text-red-500 mr-2"></i>
-                    Section 9 — Model Interpretability: Attention Maps &amp; Grad-CAM
-                </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
                     <% interpretability.forEach(function(item) { var ic = cm(item.color); -%>
                     <div class="bg-white rounded-xl p-4 hover:shadow-md transition-shadow border" style="border-color:<%= ic.border %>">
@@ -562,11 +565,32 @@
                     <% }) %>
                 </div>
 
-                <!-- Attention / Grad-CAM image placeholder -->
-                <div class="mb-8 border-2 border-dashed border-gray-300 rounded-2xl p-6 bg-gray-50 text-center">
-                    <i class="bi bi-heat-map text-4xl text-gray-300 mb-3 block"></i>
-                    <p class="text-gray-400 font-semibold text-sm">[ Figure 6 — Attention Maps (SegFormer) &amp; Grad-CAM (DeepLabV3+) ]</p>
-                    <p class="text-gray-300 text-xs mt-1">Placeholder — insert side-by-side heatmap overlays on sample validation images</p>
+                <!-- Interpretability -->
+                <h3 class="text-base font-bold text-gray-800 mb-5 flex items-center">
+                    <i class="bi bi-eye-fill text-red-500 mr-2"></i>
+                    Section 9 — Model Interpretability: Attention Maps &amp; Grad-CAM
+                </h3>
+                <div class="space-y-6 mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                            <img src="assets/asm2_segformer_attention_feature_map.png" alt="SegFormer Attention Feature Maps 1" class="w-full h-auto" loading="lazy">
+                            <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 6a — SegFormer Attention Maps (1)</p>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                            <img src="assets/asm2_segformer_attention_feature_map_2.png" alt="SegFormer Attention Feature Maps 2" class="w-full h-auto" loading="lazy">
+                            <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 6b — SegFormer Attention Maps (2)</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                            <img src="assets/asm2_deeplabv3+_resnet_gradCAM.png" alt="DeepLabV3+ ResNet Grad-CAM" class="w-full h-auto" loading="lazy">
+                            <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 6c — DeepLabV3+ ResNet-101 Grad-CAM</p>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                            <img src="assets/asm2_deeplabv3+_convnext_gradCAM.png" alt="DeepLabV3+ ConvNeXt Grad-CAM" class="w-full h-auto" loading="lazy">
+                            <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 6d — DeepLabV3+ ConvNeXt-Base Grad-CAM</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Key interpretability insight -->
@@ -624,7 +648,7 @@
                             <div class="pt-2 border-t border-gray-100">
                                 <p class="text-xs text-gray-500 font-semibold mb-1">Tradeoff Summary</p>
                                 <p class="text-xs text-gray-600 leading-relaxed">
-                                    <% if (arch.name === 'SegFormer-B2') { %>Best FLOPs/mIoU ratio. ~72 FPS, most deployment-friendly.<% } else if (arch.name === 'DeepLabV3+ ResNet-101') { %>Solid baseline. ~38 FPS, proven architecture on scene understanding.<% } else { %>Highest accuracy at cost of speed (~29 FPS) and memory (~90M params).<% } %>
+                                    <% if (arch.name === 'SegFormer-B2') { %>Best FLOPs/mIoU ratio, most deployment-friendly.<% } else if (arch.name === 'DeepLabV3+ ResNet-101') { %>Solid baseline, proven architecture on scene understanding.<% } else { %>Highest accuracy at cost of speed and memory (89.4M params).<% } %>
                                 </p>
                             </div>
                         </div>
