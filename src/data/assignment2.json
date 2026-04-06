@@ -246,7 +246,7 @@
   "methodologyComparison": {
     "title": "Method Comparison",
     "description": "Comparison of 3 semantic segmentation methods on ADE20K validation set (150 classes):",
-    "columns": ["Method", "Architecture", "Params (M)", "mIoU ↑", "Dice ↑", "Pixel Acc ↑", "Val Loss ↓", "Valid Classes"],
+    "columns": ["Method", "Architecture", "Params (M)", "mIoU ↑", "Dice ↑", "Pixel Acc ↑", "Val Loss ↓"],
     "rows": [
       {
         "method": "SegFormer-B2",
@@ -256,8 +256,7 @@
         "accuracy": "0.4627",
         "precision": "0.6057",
         "recall": "0.8071",
-        "valLoss": "1.6218",
-        "validClasses": "150/150"
+        "valLoss": "1.6218"
       },
       {
         "method": "DeepLabV3+ ResNet-101",
@@ -267,8 +266,7 @@
         "accuracy": "0.3920",
         "precision": "0.5370",
         "recall": "0.7646",
-        "valLoss": "1.6028",
-        "validClasses": "150/150"
+        "valLoss": "1.6028"
       },
       {
         "method": "DeepLabV3+ ConvNeXt-Base",
@@ -279,7 +277,6 @@
         "precision": "0.6245",
         "recall": "0.8063",
         "valLoss": "1.4382",
-        "validClasses": "150/150",
         "highlight": true
       }
     ]
