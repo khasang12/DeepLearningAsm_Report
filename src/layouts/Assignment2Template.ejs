@@ -46,7 +46,7 @@
                     <h2 class="text-2xl font-bold text-gray-900">Deliverables</h2>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Demo Video -->
                     <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
                         <i class="bi bi-play-btn-fill text-3xl text-red-500 mr-4"></i>
@@ -85,6 +85,20 @@
                                class="btn-outline text-sm py-1.5 px-3 border-gray-300 text-gray-700 hover:bg-gray-50"
                                target="_blank" rel="noopener noreferrer">
                                 View Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Streamlit Demo -->
+                    <div class="flex items-center p-4 border border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                        <i class="bi bi-lightning-charge-fill text-3xl text-violet-500 mr-4"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-1">Streamlit Demo</h3>
+                            <p class="text-sm text-gray-600 mb-3">Interactive live demo of the segmentation pipeline</p>
+                            <a href="<%= deliverableLinks.streamlitDemo || '#' %>" 
+                               class="btn-outline text-sm py-1.5 px-3 border-violet-300 text-violet-600 hover:bg-violet-50"
+                               target="_blank" rel="noopener noreferrer">
+                                Open Demo
                             </a>
                         </div>
                     </div>
@@ -654,6 +668,12 @@
                         </div>
                     </div>
                     <% }) -%>
+                </div>
+
+                <!-- Pareto Chart -->
+                <div class="mb-6 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+                    <img src="assets/asm2_pareto_eff_acc.png" alt="Pareto: Efficiency vs Accuracy Trade-off" class="w-full h-auto" loading="lazy">
+                    <p class="text-center text-gray-500 text-sm py-3 bg-gray-50 font-medium">Figure 7 — Efficiency vs Accuracy Trade-off (Bubble size ∝ model size)</p>
                 </div>
 
                 <!-- Pareto note -->

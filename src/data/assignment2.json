@@ -299,8 +299,9 @@
     }
   },
   "deliverableLinks": {
-    "demoVideo": "#",
-    "presentationVideo": "#",
-    "sourceCode": "https://github.com/khasang12/DL-Assignment2"
+    "demoVideo": "https://youtu.be/lqEq8mMmktY",
+    "presentationVideo": "https://www.youtube.com/watch?v=EBHNONlgYos",
+    "sourceCode": "https://github.com/khasang12/DeepLearningAsm2_AdvancedCV",
+    "streamlitDemo": "https://segmentation-group10.streamlit.app/"
   }
 }

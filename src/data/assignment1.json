@@ -350,6 +350,7 @@
   "deliverableLinks": {
     "demoVideo": "https://youtu.be/8SdHzLHfhMc",
     "presentationVideo": "https://youtu.be/-SqNPMu5KHo",
-    "sourceCode": "https://github.com/khasang12/DeepLearningAsm1_Classification"
+    "sourceCode": "https://github.com/khasang12/DeepLearningAsm1_Classification",
+    "streamlitDemo": "https://classification-group10.streamlit.app/"
   }
 }
